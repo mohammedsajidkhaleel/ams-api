@@ -1,0 +1,13 @@
+﻿@baseUrl = http://localhost:5132/
+
+//Get items
+@categoryId = null
+@searchText = ""
+GET {{baseUrl}}api/items?searchText={{searchText}}
+###
+
+// Get Item Categories
+@categoryId = null
+@searchText = "asa"
+GET {{baseUrl}}api/itemcategories?searchText={{searchText}}
+###

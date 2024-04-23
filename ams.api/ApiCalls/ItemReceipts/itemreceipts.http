@@ -1,0 +1,13 @@
+@baseUrl = http://localhost:5132
+POST {{baseUrl}}/api/itemreceipts
+Content-Type:application/json
+
+{
+    "poNumber" : "12312",
+    "description" : "testing",
+    "itemDetails" : [
+        "itemId" : "002688a0-b119-45c4-b140-2197b5daa998",
+        "quantity" : 5
+    ]
+}
+###
