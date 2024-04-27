@@ -9,9 +9,6 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["ams.api/ams.api.csproj", "ams.api/"]
-COPY ["ams.application/ams.application.csproj", "ams.application/"]
-COPY ["ams.domain/ams.domain.csproj", "ams.domain/"]
-COPY ["ams.infrastructure/ams.infrastructure.csproj", "ams.infrastructure/"]
 RUN dotnet restore "./ams.api/ams.api.csproj"
 COPY . .
 WORKDIR "/src/ams.api"
