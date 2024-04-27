@@ -16,8 +16,8 @@ namespace ams.api.Controllers
         [HttpGet]
         public async Task<IActionResult> Test()
         {
-            
-            return Ok($"all fine. {_configuration.GetConnectionString("Database")}");
+            return Ok($"all fine. {_configuration.GetConnectionString("Database")} {_configuration.GetValue<string
+                >("ApplicationSettings:AllowedCorsOrigins")}");
         }
     }
 }
