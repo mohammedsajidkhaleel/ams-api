@@ -1,4 +1,6 @@
-﻿namespace ams.application.Assets.GetAssets;
+﻿using ams.domain.Assets;
+
+namespace ams.application.Assets.GetAssets;
 public sealed class AssetsResponse
 {
     public Guid Id { get; set; }
@@ -12,5 +14,6 @@ public sealed class AssetsResponse
     public DateTimeOffset CreationDateTime { get; set; }
     public string ItemName { get; set; }
     public string PONumber { get; set; }
-    public string Status { get; set; }
+    public AssetStatus Status { get; set; }
+    public string StatusName { get { return Enum.GetName(typeof(AssetStatus), Status); } }
 }
