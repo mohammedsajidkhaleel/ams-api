@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ams.domain.Employees
+﻿namespace ams.domain.Employees;
+public interface IEmployeeRepository
 {
-    public interface IEmployeeRepository
-    {
-        void Add(Employee employee);
-    }
+    void Add(Employee employee);
 }
+

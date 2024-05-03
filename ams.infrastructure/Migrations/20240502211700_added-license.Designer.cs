@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ams.infrastructure;
@@ -11,9 +12,11 @@ using ams.infrastructure;
 namespace ams.infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240502211700_added-license")]
+    partial class addedlicense
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -478,59 +481,6 @@ namespace ams.infrastructure.Migrations
                         .HasDatabaseName("ix_item_categories_parent_item_category_id");
 
                     b.ToTable("item_categories", (string)null);
-                });
-
-            modelBuilder.Entity("ams.domain.Licenses.License", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<Guid?>("CreatedBy")
-                        .HasColumnType("uuid")
-                        .HasColumnName("created_by");
-
-                    b.Property<DateTimeOffset>("CreationDateTime")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("creation_date_time");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
-                        .HasColumnName("description");
-
-                    b.Property<DateOnly?>("ExpirationDate")
-                        .HasColumnType("date")
-                        .HasColumnName("expiration_date");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false)
-                        .HasColumnName("is_deleted");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("character varying(250)")
-                        .HasColumnName("name");
-
-                    b.Property<DateOnly?>("PurchasedDate")
-                        .HasColumnType("date")
-                        .HasColumnName("purchased_date");
-
-                    b.Property<int>("TotalLicenses")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasDefaultValue(0)
-                        .HasColumnName("total_licenses");
-
-                    b.HasKey("Id")
-                        .HasName("pk_licenses");
-
-                    b.ToTable("licenses", (string)null);
                 });
 
             modelBuilder.Entity("ams.domain.Projects.Project", b =>

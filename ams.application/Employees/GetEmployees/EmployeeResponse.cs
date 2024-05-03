@@ -1,7 +1,4 @@
-﻿
-using System.Globalization;
-
-namespace ams.application.Employees.GetEmployees;
+﻿namespace ams.application.Employees.GetEmployees;
 public sealed class EmployeeResponse
 {
     public Guid Id { get; set; }
