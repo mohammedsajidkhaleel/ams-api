@@ -1,5 +1,6 @@
 ﻿using ams.api.Middleware;
 using ams.infrastructure;
+using ams.infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 namespace ams.api.Extensions
 {
@@ -14,6 +15,14 @@ namespace ams.api.Extensions
             using IServiceScope scope = app.ApplicationServices.CreateScope();
 
             using var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+            dbContext.Database.Migrate();
+        }
+        public static void ApplyIdentityMigrations(this IApplicationBuilder app)
+        {
+            using IServiceScope scope = app.ApplicationServices.CreateScope();
+
+            using var dbContext = scope.ServiceProvider.GetRequiredService<AppIdentityDbContext>();
 
             dbContext.Database.Migrate();
         }

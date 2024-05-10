@@ -11,7 +11,6 @@ public sealed class License : Entity
     public Guid? CreatedBy { get; set; }
     public DateTimeOffset CreationDateTime { get; set; }
     public int TotalLicenses { get; set; }
-    public bool IsDeleted { get; set; }
     private License()
     {
         

@@ -16,7 +16,6 @@ public sealed class Asset : Entity
     public AssetDescription Description { get; private set; }
     public Guid? ItemId { get; private set; }
     public PONumber PONumber { get; private set; }
-    public bool IsDeleted { get; private set; } = false;
     private Asset()
     {
 

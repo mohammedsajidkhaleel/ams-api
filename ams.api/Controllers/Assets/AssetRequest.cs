@@ -1,4 +1,6 @@
-﻿namespace ams.api.Controllers.Assets;
+﻿using ams.application.Abstractions.Data;
+
+namespace ams.api.Controllers.Assets;
 public record AssetRequest(
     string Code,
     string Name,

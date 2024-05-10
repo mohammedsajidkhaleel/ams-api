@@ -1,6 +1,8 @@
 using ams.infrastructure;
 using ams.application;
 using ams.api.Extensions;
+using ams.infrastructure.Data;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +26,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -34,13 +37,17 @@ if (app.Environment.IsDevelopment())
 }
 
 app.ApplyMigrations();
+app.ApplyIdentityMigrations();
 
 //app.UseHttpsRedirection();
+//app.MapGroup("/identity").MapIdentityApi<IdentityUser>();
+
 app.UseCustomExceptionHandler();
 
 app.UseCors(allowedOrigins);
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
+app.MapIdentityApi<User>();
 app.Run();

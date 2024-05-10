@@ -2,10 +2,12 @@
 using ams.application.Licenses.GetLicenses;
 using ams.domain.Abstractions;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ams.api.Controllers.Licenses;
 
+[Authorize]
 [ApiController]
 [Route("api/licenses")]
 public class LicenseController : ControllerBase

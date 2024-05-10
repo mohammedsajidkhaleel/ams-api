@@ -15,6 +15,7 @@ namespace ams.domain.Abstractions
         }
         protected Entity() { }
         public Guid Id { get; init; }
+        public bool IsDeleted { get; set; } 
         protected void RaiseDomainEvent(IDomainEvent domainEvent)
         {
             _domainEvents.Add(domainEvent);

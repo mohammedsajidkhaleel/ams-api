@@ -16,7 +16,6 @@ public sealed class Employee : Entity
     public Guid? ProjectId { get; set; }
     public DateTimeOffset CreationDateTime { get; private set; }
     public EmployeeStatus Status { get; private set; }
-    public bool IsDeleted { get;private set; }
     private Employee()
     {
 

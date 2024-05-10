@@ -1,22 +1,27 @@
 ﻿
 using ams.application.Abstractions.Data;
 using ams.application.Abstractions.Messaging;
+using ams.application.Models;
 using ams.domain.Abstractions;
 using Dapper;
 
 namespace ams.application.Assets.GetAssets;
 internal sealed class GetAssetsQueryHandler
-    : IQueryHandler<GetAssetsQuery, IReadOnlyList<AssetsResponse>>
+    : IQueryHandler<GetAssetsQuery, PaginatedResponse<AssetsResponse>>
 {
     private readonly ISqlConnectionFactory _sqlConnectionFactory;
     public GetAssetsQueryHandler(ISqlConnectionFactory sqlConnectionFactory)
     {
         _sqlConnectionFactory = sqlConnectionFactory;
     }
-    public async Task<Result<IReadOnlyList<AssetsResponse>>> Handle(GetAssetsQuery request, CancellationToken cancellationToken)
+    public async Task<Result<PaginatedResponse<AssetsResponse>>> Handle(GetAssetsQuery request, CancellationToken cancellationToken)
     {
         using var connection = _sqlConnectionFactory.CreateConnection();
         var query = """
+            SELECT COUNT(*) AS COUNT
+            FROM ASSETS
+            WHERE IS_DELETED = FALSE;
+
             SELECT A.ID,
             	A.CODE,
             	A.NAME,
@@ -36,12 +41,21 @@ internal sealed class GetAssetsQueryHandler
             LEFT JOIN PROJECTS P ON P.ID = E.PROJECT_ID
             LEFT JOIN ITEMS I ON I.ID = A.ITEM_ID
             WHERE A.IS_DELETED = FALSE
+            OFFSET @OFFSET
+            LIMIT @LIMIT
             """;
-        var assets = await connection
-            .QueryAsync<AssetsResponse>(
-            query
-            );
-        return assets.ToList();
+        var response = new PaginatedResponse<AssetsResponse>();
+        using (var multi = await connection.QueryMultipleAsync(query,
+            new
+            {
+                offset = request.pageIndex * request.pageSize,
+                limit = request.pageSize
+            }))
+        {
+            response.TotalItems = await multi.ReadFirstOrDefaultAsync<int>();
+            response.Items = multi.Read<AssetsResponse>().ToList();
+        }
+        return response;
     }
 }
 

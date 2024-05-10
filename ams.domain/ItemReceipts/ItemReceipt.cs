@@ -36,7 +36,6 @@ namespace ams.domain.ItemReceipts
         public List<ItemReceiptDetail> Details { get; private set; } = new();
         public string? Description { get; set; } = string.Empty;
         public ItemReceiptStatus Status { get; private set; }
-        public bool IsDeleted { get; set; }
         public static ItemReceipt Create(string poNumber, string itemReceiptNumber, string description, ItemReceiptStatus status, List<ItemReceiptDetail> details)
         {
             var itemReceipt = new ItemReceipt(Guid.NewGuid(), poNumber, itemReceiptNumber, description, DateTimeOffset.UtcNow, status, details);
