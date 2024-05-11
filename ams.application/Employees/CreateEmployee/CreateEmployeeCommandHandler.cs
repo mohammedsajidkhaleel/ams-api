@@ -2,7 +2,6 @@
 using ams.application.Abstractions.Messaging;
 using ams.domain.Abstractions;
 using ams.domain.Employees;
-using ams.domain.ItemReceipts;
 
 namespace ams.application.Employees.CreateEmployee;
 public sealed class CreateEmployeeCommandHandler

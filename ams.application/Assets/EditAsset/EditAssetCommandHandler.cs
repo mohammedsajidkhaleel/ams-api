@@ -21,7 +21,7 @@ internal sealed class EditAssetCommandHandler
         var asset = await _assetRepository.GetByIdAsync(request.AssetId);
         if (asset != null)
         {
-            Asset.UpdateAsset(asset,
+            Asset.EditAsset(asset,
                  new AssetCode(request.AssetCode),
             new AssetName(request.AssetName),
             new SerialNumber(request.SerialNumber),

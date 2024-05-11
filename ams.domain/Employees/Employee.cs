@@ -81,5 +81,37 @@ public sealed class Employee : Entity
         employee.RaiseDomainEvent(new EmployeeCreatedDomainEvent(employee.Id));
         return employee;
     }
+
+    public static Employee EditEmployee(
+    Employee employee,
+    EmployeeCode code,
+    EmployeeName name,
+    Guid? sponsorId,
+    Guid? departmentId,
+    Guid? employeeCategoryId,
+    Guid? nationalityId,
+    Guid? employeePositionId,
+    Mobile mobile,
+    Email email,
+    DateOnly doj,
+    Guid? projectId,
+    EmployeeStatus status
+    )
+    {
+        employee.Code = code;
+        employee.Name = name;
+        employee.SponsorId = sponsorId;
+        employee.DepartmentId = departmentId;
+        employee.EmployeeCategoryId = employeeCategoryId;
+        employee.NationalityId = nationalityId;
+        employee.EmployeePositionId = employeePositionId;
+        employee.Mobile = mobile;
+        employee.Email = email;
+        employee.DOJ = doj;
+        employee.ProjectId = projectId;
+        employee.Status = status;
+        employee.RaiseDomainEvent(new EmployeeCreatedDomainEvent(employee.Id));
+        return employee;
+    }
 }
 

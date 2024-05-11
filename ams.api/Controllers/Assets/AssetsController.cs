@@ -1,14 +1,10 @@
-﻿using ams.api.Controllers.Employees;
-using ams.application.Assets.CreateAsset;
+﻿using ams.application.Assets.CreateAsset;
 using ams.application.Assets.DeleteAsset;
 using ams.application.Assets.EditAsset;
 using ams.application.Assets.GetAssets;
-using ams.application.Employees.CreateEmployee;
-using ams.application.Employees.GetEmployees;
 using ams.domain.Abstractions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ams.api.Controllers.Assets;
@@ -60,6 +56,15 @@ public class AssetsController : ControllerBase
          model?.PONumber ?? "");
         Result<Guid> result = await _sender.Send(command, cancellationToken);
         return Ok(new { id = result.Value });
+    }    
+    
+    [HttpDelete("{id:Guid}")]
+    public async Task<IActionResult> DeleteAsset([FromRoute] Guid id,
+        CancellationToken cancellationToken)
+    {
+        var command = new DeleteAssetCommand(id);
+        await _sender.Send(command, cancellationToken);
+        return Ok();
     }
 
     [HttpGet]
@@ -74,12 +79,5 @@ public class AssetsController : ControllerBase
         return Ok(assets);
     }
 
-    [HttpDelete("{id:Guid}")]
-    public async Task<IActionResult> DeleteAsset([FromRoute] Guid id,
-        CancellationToken cancellationToken)
-    {
-        var command = new DeleteAssetCommand(id);
-        await _sender.Send(command, cancellationToken);
-        return Ok();
-    }
+
 }

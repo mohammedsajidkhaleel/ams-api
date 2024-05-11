@@ -59,7 +59,7 @@ public sealed class Asset : Entity
         asset.RaiseDomainEvent(new AssetCreatedDomainEvent(asset.Id));
         return asset;
     }
-    public static Asset UpdateAsset(Asset asset,
+    public static Asset EditAsset(Asset asset,
         AssetCode assetCode,
         AssetName assetName,
         SerialNumber serialNumber,
