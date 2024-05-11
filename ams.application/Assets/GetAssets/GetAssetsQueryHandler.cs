@@ -20,7 +20,8 @@ internal sealed class GetAssetsQueryHandler
         var query = """
             SELECT COUNT(*) AS COUNT
             FROM ASSETS
-            WHERE IS_DELETED = FALSE;
+            WHERE IS_DELETED = FALSE AND (@CODE IS NULL OR @CODE = '' OR 
+            CODE LIKE '%@CODE%');
 
             SELECT A.ID,
             	A.CODE,
@@ -41,6 +42,8 @@ internal sealed class GetAssetsQueryHandler
             LEFT JOIN PROJECTS P ON P.ID = E.PROJECT_ID
             LEFT JOIN ITEMS I ON I.ID = A.ITEM_ID
             WHERE A.IS_DELETED = FALSE
+            AND (@CODE IS NULL OR @CODE = '' OR 
+            A.CODE LIKE '%@CODE%')
             OFFSET @OFFSET
             LIMIT @LIMIT
             """;
@@ -49,7 +52,8 @@ internal sealed class GetAssetsQueryHandler
             new
             {
                 offset = request.pageIndex * request.pageSize,
-                limit = request.pageSize
+                limit = request.pageSize,
+                code = request.assetCode
             }))
         {
             response.TotalItems = await multi.ReadFirstOrDefaultAsync<int>();

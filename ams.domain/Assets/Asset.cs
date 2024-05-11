@@ -59,4 +59,30 @@ public sealed class Asset : Entity
         asset.RaiseDomainEvent(new AssetCreatedDomainEvent(asset.Id));
         return asset;
     }
+    public static Asset UpdateAsset(Asset asset,
+        AssetCode assetCode,
+        AssetName assetName,
+        SerialNumber serialNumber,
+        Guid? assignedTo,
+        Guid? projectId,
+        AssetDescription assetDescription,
+        Guid? itemId,
+        PONumber pONumber
+        )
+    {
+        asset.Code = assetCode;
+        asset.Name = assetName;
+        asset.SerialNumber = serialNumber;
+        asset.AssignedTo = assignedTo;
+        asset.ProjectId = projectId;
+        asset.Description = assetDescription;
+        asset.ItemId = itemId;
+        asset.PONumber = pONumber;
+        return asset;
+    }
+    public static Asset DeleteAsset(Asset asset)
+    {
+        asset.IsDeleted = true;
+        return asset;
+    }
 }

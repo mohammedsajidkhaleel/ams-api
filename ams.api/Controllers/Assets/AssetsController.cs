@@ -1,5 +1,7 @@
 ﻿using ams.api.Controllers.Employees;
 using ams.application.Assets.CreateAsset;
+using ams.application.Assets.DeleteAsset;
+using ams.application.Assets.EditAsset;
 using ams.application.Assets.GetAssets;
 using ams.application.Employees.CreateEmployee;
 using ams.application.Employees.GetEmployees;
@@ -41,14 +43,43 @@ public class AssetsController : ControllerBase
             new { id = result.Value }, result.Value);
     }
 
+    [HttpPut("{id:Guid}")]
+    public async Task<IActionResult> EditAsset([FromRoute] Guid id,
+        AssetRequest model,
+        CancellationToken cancellationToken)
+    {
+        var command = new EditAssetCommand(
+            id,
+            model.Code,
+         model.Name,
+         model.SerialNumber,
+         model?.AssignedTo,
+         model?.ProjectId,
+         model?.Description ?? "",
+         model?.ItemId,
+         model?.PONumber ?? "");
+        Result<Guid> result = await _sender.Send(command, cancellationToken);
+        return Ok(new { id = result.Value });
+    }
+
     [HttpGet]
     public async Task<IActionResult> GetAllAssets(
         int pageIndex = 0,
         int pageSize = 10,
+        string assetCode = "",
         CancellationToken cancellationToken = default)
     {
-        var query = new GetAssetsQuery(pageIndex, pageSize);
-        var assets = await _sender.Send(query);
+        var query = new GetAssetsQuery(pageIndex, pageSize, assetCode);
+        var assets = await _sender.Send(query, cancellationToken);
         return Ok(assets);
+    }
+
+    [HttpDelete("{id:Guid}")]
+    public async Task<IActionResult> DeleteAsset([FromRoute] Guid id,
+        CancellationToken cancellationToken)
+    {
+        var command = new DeleteAssetCommand(id);
+        await _sender.Send(command, cancellationToken);
+        return Ok();
     }
 }

@@ -28,5 +28,9 @@ namespace ams.infrastructure.Repositories
         {
             _dbContext.Add(entity);
         }
+        public void Remove(T entity)
+        {
+            _dbContext.Remove(entity);
+        }
     }
 }
