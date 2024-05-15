@@ -1,4 +1,5 @@
 ﻿using ams.domain.Licenses;
+using ams.domain.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -22,6 +23,9 @@ internal sealed class LicenseConfiguration
             .HasDefaultValue(0);
         builder.Property(i => i.IsDeleted)
             .HasDefaultValue(false);
+        builder.Property(x => x.PONumber)
+           .HasMaxLength(50)
+           .HasConversion(poNumber => poNumber.Value, value => new PONumber(value));
     }
 }
 

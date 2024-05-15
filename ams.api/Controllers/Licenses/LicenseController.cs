@@ -30,7 +30,9 @@ public class LicenseController : ControllerBase
             model?.PurchasedDate,
             model?.ExpirationDate,
             null,
-            model?.TotalLicenses ?? 0
+            model?.TotalLicenses ?? 0,
+            model?.projectId,
+            model?.poNumber
             );
         Result<Guid> result = await _sender.Send(command,
             cancellationToken);

@@ -1,5 +1,7 @@
 ﻿using ams.domain.Abstractions;
 using ams.domain.Licenses.Events;
+using ams.domain.Projects;
+using ams.domain.Shared;
 
 namespace ams.domain.Licenses;
 public sealed class License : Entity
@@ -11,9 +13,11 @@ public sealed class License : Entity
     public Guid? CreatedBy { get; set; }
     public DateTimeOffset CreationDateTime { get; set; }
     public int TotalLicenses { get; set; }
+    public Guid? ProjectId { get; set; }
+    public PONumber? PONumber { get; set; }
     private License()
     {
-        
+
     }
     private License(Guid id,
         LicenseName name,
@@ -21,7 +25,9 @@ public sealed class License : Entity
         DateOnly? expirationDate,
         LicenseDescription? description,
         Guid? createdBy,
-        int totalLicenses) : base(id)
+        int totalLicenses,
+        Guid? projectId,
+        PONumber? poNumber) : base(id)
     {
         Id = id;
         Name = name;
@@ -31,6 +37,8 @@ public sealed class License : Entity
         CreatedBy = createdBy;
         TotalLicenses = totalLicenses;
         CreationDateTime = DateTimeOffset.UtcNow;
+        ProjectId = projectId;
+        PONumber = poNumber;
     }
 
     public static License CreateLicense(LicenseName name,
@@ -38,7 +46,9 @@ public sealed class License : Entity
         DateOnly? expirationDate,
         LicenseDescription? description,
         Guid? createdBy,
-        int totalLicenses)
+        int totalLicenses,
+        Guid? projectId,
+        PONumber poNumber)
     {
         var license = new License(Guid.NewGuid(),
             name,
@@ -46,7 +56,9 @@ public sealed class License : Entity
             expirationDate,
             description,
             createdBy,
-            totalLicenses);
+            totalLicenses,
+            projectId,
+            poNumber);
         license.RaiseDomainEvent(new LicenseCreatedDomainEvent(license.Id));
         return license;
     }

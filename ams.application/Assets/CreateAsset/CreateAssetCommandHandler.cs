@@ -1,7 +1,7 @@
-﻿using ams.application.Abstractions.Data;
-using ams.application.Abstractions.Messaging;
+﻿using ams.application.Abstractions.Messaging;
 using ams.domain.Abstractions;
 using ams.domain.Assets;
+using ams.domain.Shared;
 
 namespace ams.application.Assets.CreateAsset;
 internal sealed class CreateAssetCommandHandler

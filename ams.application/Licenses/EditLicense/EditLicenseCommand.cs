@@ -1,7 +1,8 @@
 ﻿using ams.application.Abstractions.Messaging;
 
-namespace ams.application.Licenses.CreateLicense;
-public sealed record CreateLicenseCommand(
+namespace ams.application.Licenses.EditLicense;
+public sealed record EditLicenseCommand(
+  Guid LicenseId,
   string LicenseName,
   string? Description,
   DateOnly? PurchasedDate,

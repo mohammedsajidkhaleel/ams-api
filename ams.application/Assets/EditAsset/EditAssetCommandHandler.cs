@@ -2,6 +2,7 @@
 using ams.application.Abstractions.Messaging;
 using ams.domain.Abstractions;
 using ams.domain.Assets;
+using ams.domain.Shared;
 
 namespace ams.application.Assets.EditAsset;
 internal sealed class EditAssetCommandHandler

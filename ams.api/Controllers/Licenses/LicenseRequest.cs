@@ -5,5 +5,7 @@ public record LicenseRequest(
     string? Description,
     DateOnly? PurchasedDate,
     DateOnly? ExpirationDate,
-    int? TotalLicenses
+    int? TotalLicenses,
+    Guid? projectId,
+    string? poNumber
     );

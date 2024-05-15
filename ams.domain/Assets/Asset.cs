@@ -1,7 +1,6 @@
 ﻿using ams.domain.Abstractions;
 using ams.domain.Assets.Events;
-using ams.domain.Items;
-using ams.domain.Projects;
+using ams.domain.Shared;
 
 namespace ams.domain.Assets;
 public sealed class Asset : Entity

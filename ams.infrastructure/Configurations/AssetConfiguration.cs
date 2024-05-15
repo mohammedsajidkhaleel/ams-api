@@ -2,6 +2,7 @@
 using ams.domain.Employees;
 using ams.domain.Items;
 using ams.domain.Projects;
+using ams.domain.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

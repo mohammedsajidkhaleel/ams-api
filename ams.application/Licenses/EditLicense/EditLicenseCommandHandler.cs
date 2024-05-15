@@ -4,19 +4,19 @@ using ams.domain.Abstractions;
 using ams.domain.Licenses;
 using ams.domain.Shared;
 
-namespace ams.application.Licenses.CreateLicense;
-public sealed class CreateLicenseCommandHandler
-    : ICommandHandler<CreateLicenseCommand, Guid>
+namespace ams.application.Licenses.EditLicense;
+public sealed class EditLicenseCommandHandler
+    : ICommandHandler<EditLicenseCommand, Guid>
 {
     private readonly ILicenseRepository _licenseRepository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public CreateLicenseCommandHandler(ILicenseRepository licenseRepository, IUnitOfWork unitOfWork)
+    public EditLicenseCommandHandler(ILicenseRepository licenseRepository, IUnitOfWork unitOfWork)
     {
         _licenseRepository = licenseRepository;
         _unitOfWork = unitOfWork;
     }
-    public async Task<Result<Guid>> Handle(CreateLicenseCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Guid>> Handle(EditLicenseCommand request, CancellationToken cancellationToken)
     {
         var license = License.CreateLicense(new LicenseName(request.LicenseName),
             request.PurchasedDate,
