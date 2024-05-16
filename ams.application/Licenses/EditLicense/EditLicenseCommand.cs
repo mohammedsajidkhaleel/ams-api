@@ -11,5 +11,5 @@ public sealed record EditLicenseCommand(
   int TotalLicenses,
   Guid? ProjectId,
   string? PONumber)
-    : ICommand<Guid>;
+    : ICommand<Guid?>;
 

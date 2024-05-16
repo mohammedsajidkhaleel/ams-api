@@ -14,5 +14,5 @@ public sealed record EditEmployeeCommand(
     string Email,
     string DateOfJoining,
     Guid? ProjectId)
-    : ICommand<Guid>;
+    : ICommand<Guid?>;
 

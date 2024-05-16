@@ -5,6 +5,7 @@ using ams.domain.Assets;
 using ams.domain.Employees;
 using ams.domain.ItemReceipts;
 using ams.domain.Items;
+using ams.domain.LicensedAssets;
 using ams.domain.Licenses;
 using ams.infrastructure.Clock;
 using ams.infrastructure.Data;
@@ -39,6 +40,7 @@ namespace ams.infrastructure
             services.AddScoped<IAssetRepository, AssetRepository>();
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             services.AddScoped<ILicenseRepository, LicenseRepository>();
+            services.AddScoped<ILicensedAssetRepository, LicensedAssetRepository>();
             services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<ApplicationDbContext>());
 
             return services;

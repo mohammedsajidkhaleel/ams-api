@@ -65,7 +65,7 @@ public class EmployeesController : ControllerBase
             model.Email,
             model.Doj,
             model.ProjectId);
-        Result<Guid> result = await _sender.Send(command, cancellationToken);
+        Result<Guid?> result = await _sender.Send(command, cancellationToken);
         return Ok(new { id = result.Value });
     }
 

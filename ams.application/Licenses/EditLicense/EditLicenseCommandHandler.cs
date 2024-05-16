@@ -6,7 +6,7 @@ using ams.domain.Shared;
 
 namespace ams.application.Licenses.EditLicense;
 public sealed class EditLicenseCommandHandler
-    : ICommandHandler<EditLicenseCommand, Guid>
+    : ICommandHandler<EditLicenseCommand, Guid?>
 {
     private readonly ILicenseRepository _licenseRepository;
     private readonly IUnitOfWork _unitOfWork;
@@ -16,19 +16,24 @@ public sealed class EditLicenseCommandHandler
         _licenseRepository = licenseRepository;
         _unitOfWork = unitOfWork;
     }
-    public async Task<Result<Guid>> Handle(EditLicenseCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Guid?>> Handle(EditLicenseCommand request, CancellationToken cancellationToken)
     {
-        var license = License.CreateLicense(new LicenseName(request.LicenseName),
+        var license = await _licenseRepository.GetByIdAsync(request.LicenseId);
+        if (license == null)
+            return null;
+        if (license != null)
+        {
+            License.CreateLicense(new LicenseName(request.LicenseName),
             request.PurchasedDate,
             request.ExpirationDate,
-            new LicenseDescription(request.Description),
+            new LicenseDescription(request.Description ?? ""),
             request.CreatedBy,
             request.TotalLicenses,
             request.ProjectId,
-            new PONumber(request?.PONumber)
+            new PONumber(request.PONumber ?? "")
             );
-        _licenseRepository.Add(license);
-        await _unitOfWork.SaveChangesAsync();
-        return license.Id;
+            await _unitOfWork.SaveChangesAsync();
+        }
+        return license?.Id;
     }
 }

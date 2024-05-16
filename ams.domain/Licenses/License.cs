@@ -62,5 +62,24 @@ public sealed class License : Entity
         license.RaiseDomainEvent(new LicenseCreatedDomainEvent(license.Id));
         return license;
     }
+
+    public static License EditLicense(License license, LicenseName name,
+       DateOnly? purchaseDate,
+    DateOnly? expirationDate,
+    LicenseDescription? description,
+    int totalLicenses,
+    Guid? projectId,
+    PONumber poNumber)
+    {
+        license.Name = name;
+        license.PurchasedDate = purchaseDate;
+        license.ExpirationDate = expirationDate;
+        license.Description = description;
+        license.TotalLicenses = totalLicenses;
+        license.ProjectId = projectId;
+        license.PONumber = poNumber;
+        license.RaiseDomainEvent(new LicenseUpdatedDomainEvent(license.Id));
+        return license;
+    }
 }
 

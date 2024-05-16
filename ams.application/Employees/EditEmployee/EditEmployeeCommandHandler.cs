@@ -4,7 +4,7 @@ using ams.domain.Employees;
 
 namespace ams.application.Employees.EditEmployee;
 public sealed class EditEmployeeCommandHandler
-    : ICommandHandler<EditEmployeeCommand, Guid>
+    : ICommandHandler<EditEmployeeCommand, Guid?>
 {
     private readonly IEmployeeRepository _employeeRepository;
     private readonly IUnitOfWork _unitOfWork;
@@ -14,9 +14,11 @@ public sealed class EditEmployeeCommandHandler
         _employeeRepository = employeeRepository;
         _unitOfWork = unitOfWork;
     }
-    public async Task<Result<Guid>> Handle(EditEmployeeCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Guid?>> Handle(EditEmployeeCommand request, CancellationToken cancellationToken)
     {
         var employee = await _employeeRepository.GetByIdAsync(request.EmployeeId);
+        if (employee == null)
+            return null;
         if (employee != null)
         {
             Employee.EditEmployee(employee,
