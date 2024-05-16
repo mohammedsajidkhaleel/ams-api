@@ -22,7 +22,7 @@ internal sealed class DeleteLicensedAssetCommandHandler
             _licensedAssetRepository.Remove(licensedAsset);
             await _unitOfWork.SaveChangesAsync();
         }
-        return null;
+        return licensedAsset.Id;
     }
 }
 

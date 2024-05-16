@@ -1,4 +1,8 @@
-﻿using ams.application.Licenses.CreateLicense;
+﻿using ams.api.Extensions;
+using ams.application.LicensedAssets.CreateLicensedAsset;
+using ams.application.LicensedAssets.DeleteLicensedAsset;
+using ams.application.LicensedAssets.GetLicencedAssets;
+using ams.application.Licenses.CreateLicense;
 using ams.application.Licenses.DeleteLicense;
 using ams.application.Licenses.EditLicense;
 using ams.application.Licenses.GetLicenses;
@@ -75,6 +79,30 @@ public class LicenseController : ControllerBase
     public async Task<IActionResult> DeleteLicense(Guid id, CancellationToken cancellationToken)
     {
         var query = new DeleteLicenseCommand(id);
+        var result = await _sender.Send(query, cancellationToken);
+        return Ok(result);
+    }
+
+    [HttpGet("{id:Guid}/assets")]
+    public async Task<IActionResult> GetLicensedAssets([FromRoute] Guid id, [FromQuery] int? pageIndex = 0, [FromQuery] int? pageSize = 10)
+    {
+        var query = new GetLicensedAssetQuery(id, pageIndex.Value, pageSize.Value);
+        var result = await _sender.Send(query);
+        return Ok(result);
+    }
+
+    [HttpPost("{id:Guid}/assets")]
+    public async Task<IActionResult> AssignLicenseToAsset([FromRoute] Guid id, [FromBody] LicensedAssetRequest model, CancellationToken cancellationToken)
+    {
+        var query = new CreateLicensedAssetCommand(id, model.AssetId, HttpContext.User.GetLoggedInUser());
+        var result = await _sender.Send(query, cancellationToken);
+        return Ok(result);
+    }
+
+    [HttpDelete("assets/{id:Guid}")]
+    public async Task<IActionResult> RemoveLicenseFromAsset(Guid id, CancellationToken cancellationToken)
+    {
+        var query = new DeleteLicensedAssetCommand(id);
         var result = await _sender.Send(query, cancellationToken);
         return Ok(result);
     }
