@@ -3,7 +3,14 @@ using ams.domain.ItemReceipts;
 
 namespace ams.application.ItemReceipts.CreateItemReceipt;
 public sealed record CreateItemReceiptCommand(
-    string pONumber,
-    string description,
-    List<ItemReceiptDetail> itemDetails
+    string PONumber,
+    string Description,
+    List<ItemReceiptDetailRequest> ItemDetails
     ) : ICommand<Guid>;
+
+public sealed record ItemReceiptDetailRequest(
+    Guid ItemId,
+    decimal Quantity,
+    string Description,
+    List<string> SerialNumbers
+    );

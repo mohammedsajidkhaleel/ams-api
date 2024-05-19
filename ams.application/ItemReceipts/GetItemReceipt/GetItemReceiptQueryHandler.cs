@@ -26,7 +26,7 @@ internal sealed class GetItemReceiptQueryHandler
             	ITEM_RECEIPT_NUMBER as ItemReceiptNumber,
             	PO_NUMBER as PONumber
             FROM ITEM_RECEIPTS
-            Where Id = @ItemReceiptId
+            Where Id = @ItemReceiptId;
             """;
         ItemReceiptResponse? itemReceipt = await connection.QueryFirstOrDefaultAsync<ItemReceiptResponse>(
            query,
@@ -47,15 +47,32 @@ internal sealed class GetItemReceiptQueryHandler
                 FROM ITEM_RECEIPT_DETAILS IRD
                 INNER JOIN ITEMS I ON I.ID = IRD.Item_Id
                 INNER JOIN ITEM_CATEGORIES IC ON I.ITEM_CATEGORY_ID = IC.ID
-                WHERE IRD.ITEM_RECEIPT_ID = @ItemReceiptId
+                WHERE IRD.ITEM_RECEIPT_ID = @ItemReceiptId;
+
+                SELECT IRS.SERIAL_NUMBER AS SERIALNUMBER,
+                IRS.ITEM_RECEIPT_DETAIL_ID As ITEMRECEIPTDETAILID
+                FROM ITEM_RECEIPT_ITEM_SERIAL_NUMBERS IRS
+                INNER JOIN ITEM_RECEIPT_DETAILS IRD ON IRD.ID = IRS.ITEM_RECEIPT_DETAIL_ID
+                WHERE IRD.ITEM_RECEIPT_ID = @ItemReceiptId;
                 """;
-            var details = await connection.QueryAsync<ItemReceiptDetailResponse>(
-           query,
-           new
-           {
-               request.ItemReceiptId
-           });
-            itemReceipt.Details = details.ToList();
+
+            using (var multResult = await connection.QueryMultipleAsync(query,
+                new
+                {
+                    request.ItemReceiptId
+                }))
+            {
+                var receiptDetails = multResult.Read<ItemReceiptDetailResponse>().ToList();
+                var serialNumbers = multResult.Read<ItemReceiptSerialNumberResponse>().ToList();
+                if (serialNumbers != null && serialNumbers.Count > 0)
+                {
+                    foreach (var itemDetail in receiptDetails)
+                        itemDetail.SerialNumbers = serialNumbers
+                            .Where(i => i.ItemReceiptDetailId == itemDetail.Id)
+                            .Select(i => i.SerialNumber).ToList();
+                }
+                itemReceipt.Details = receiptDetails;
+            };
         }
         return itemReceipt;
     }

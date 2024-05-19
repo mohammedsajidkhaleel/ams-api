@@ -19,11 +19,6 @@ using Microsoft.AspNetCore.Server.HttpSys;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ams.infrastructure
 {
@@ -37,6 +32,7 @@ namespace ams.infrastructure
             AddAuthentication(services, configuration);
             services.AddScoped<IItemRepository, ItemRepository>();
             services.AddScoped<IItemReceiptRepository, ItemReceiptRepository>();
+            services.AddScoped<IItemReceiptDetailRepository, ItemReceiptDetailRepository>();
             services.AddScoped<IAssetRepository, AssetRepository>();
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             services.AddScoped<ILicenseRepository, LicenseRepository>();

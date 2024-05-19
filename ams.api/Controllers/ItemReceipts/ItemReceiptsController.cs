@@ -1,4 +1,5 @@
 ﻿using ams.application.ItemReceipts.CreateItemReceipt;
+using ams.application.ItemReceipts.EditItemReceipt;
 using ams.application.ItemReceipts.GetItemReceipt;
 using ams.application.ItemReceipts.GetItemReceipts;
 using ams.domain.Abstractions;
@@ -46,13 +47,13 @@ public class ItemReceiptsController : ControllerBase
         CancellationToken cancellationToken
         )
     {
-        List<ItemReceiptDetail> details = new List<ItemReceiptDetail>();
+        List<ItemReceiptDetailRequest> details = new List<ItemReceiptDetailRequest>();
         foreach (var item in model.itemDetails)
         {
-            details.Add(ItemReceiptDetail.Create(
-                item.itemId,
+            details.Add(new ItemReceiptDetailRequest(item.itemId,
                 item.quantity,
-                ""
+                item.description,
+                item.serialNumbers
                 ));
         }
 
@@ -63,5 +64,26 @@ public class ItemReceiptsController : ControllerBase
             );
         Result<Guid> result = await _sender.Send(command, cancellationToken);
         return CreatedAtAction(nameof(GetItemReceipt), new { id = result.Value }, result.Value);
+    }
+
+    [HttpPut("{id:guid}")]
+    public async Task<IActionResult> EditItemReceipt([FromRoute] Guid id,
+        ItemReceiptRequest model,
+        CancellationToken cancellationToken)
+    {
+        List<ItemReceiptDetailRequest> details = new List<ItemReceiptDetailRequest>();
+        foreach (var item in model.itemDetails)
+        {
+            details.Add(new ItemReceiptDetailRequest(item.itemId,
+                item.quantity,
+                item.description,
+                item.serialNumbers
+                ));
+        }
+        var command = new EditItemReceiptCommand(id, model.poNumber, model.description, details);
+        var result = await _sender.Send(command, cancellationToken);
+        if (result == null)
+            return NotFound("Item receipt not found");
+        return Ok(result);
     }
 }

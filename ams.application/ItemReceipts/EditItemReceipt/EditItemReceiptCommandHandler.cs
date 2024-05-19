@@ -4,32 +4,32 @@ using ams.domain.Abstractions;
 using ams.domain.ItemReceipts;
 using Dapper;
 
-namespace ams.application.ItemReceipts.CreateItemReceipt;
-internal sealed class CreateItemReceiptCommandHandler : ICommandHandler<CreateItemReceiptCommand, Guid>
+namespace ams.application.ItemReceipts.EditItemReceipt;
+internal sealed class EditItemReceiptCommandHandler : ICommandHandler<EditItemReceiptCommand, Guid>
 {
     private readonly IItemReceiptRepository _itemReceiptRepository;
+    private readonly IItemReceiptDetailRepository _itemReceiptDetailRepository;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly ISqlConnectionFactory _sqlConnectionFactory;
-    public CreateItemReceiptCommandHandler(
+    public EditItemReceiptCommandHandler(
            IItemReceiptRepository itemReceiptRepository,
         IUnitOfWork unitOfWork,
-        ISqlConnectionFactory connection)
+        IItemReceiptDetailRepository itemReceiptDetailRepository)
     {
         _itemReceiptRepository = itemReceiptRepository;
         _unitOfWork = unitOfWork;
-        _sqlConnectionFactory = connection;
+        _itemReceiptDetailRepository = itemReceiptDetailRepository;
     }
     public async Task<Result<Guid>> Handle(
-        CreateItemReceiptCommand request,
+        EditItemReceiptCommand request,
         CancellationToken cancellationToken)
     {
-        using var connection = _sqlConnectionFactory.CreateConnection();
-        var query = """
-            SELECT cast(COALESCE(MAX(ITEM_RECEIPT_NUMBER),'10000000') as int) + 1
-            FROM ITEM_RECEIPTS
-            """;
+        var itemReceipt = await _itemReceiptRepository.GetByIdAsync(request.ItemReceiptId);
+        if (itemReceipt == null)
+            return null;
+        foreach (var detail in itemReceipt.Details)
+            _itemReceiptDetailRepository.Remove(detail);
+        //itemReceipt.Details.Clear();
 
-        var itemReceiptNumber = await connection.ExecuteScalarAsync<string>(query);
         var itemDetails = new List<ItemReceiptDetail>();
         foreach (var irdr in request.ItemDetails)
         {
@@ -40,14 +40,12 @@ internal sealed class CreateItemReceiptCommandHandler : ICommandHandler<CreateIt
             itemDetails.Add(id);
         }
 
-        var itemReceipt = ItemReceipt.Create(
+        ItemReceipt.Edit(
+            itemReceipt,
             request.PONumber,
-            itemReceiptNumber,
             request.Description,
-            ItemReceiptStatus.New,
             itemDetails
-         );
-        _itemReceiptRepository.Add(itemReceipt);
+        );
         await _unitOfWork.SaveChangesAsync();
         return itemReceipt.Id;
     }

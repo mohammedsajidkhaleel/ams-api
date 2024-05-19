@@ -19,6 +19,7 @@ namespace ams.infrastructure.Configurations
             builder.HasIndex(item => item.ItemReceiptNumber).IsUnique();
             builder.Property(i => i.IsDeleted)
                 .HasDefaultValue(false);
+           
         }
     }
 }

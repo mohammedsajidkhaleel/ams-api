@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ams.infrastructure;
@@ -11,9 +12,11 @@ using ams.infrastructure;
 namespace ams.infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240517081432_added-itemreceiptitemserial")]
+    partial class addeditemreceiptitemserial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -455,12 +458,12 @@ namespace ams.infrastructure.Migrations
                         .HasColumnName("serial_number");
 
                     b.HasKey("Id")
-                        .HasName("pk_item_receipt_item_serial_numbers");
+                        .HasName("pk_item_receipt_item_serial_number");
 
                     b.HasIndex("ItemReceiptDetailId")
-                        .HasDatabaseName("ix_item_receipt_item_serial_numbers_item_receipt_detail_id");
+                        .HasDatabaseName("ix_item_receipt_item_serial_number_item_receipt_detail_id");
 
-                    b.ToTable("item_receipt_item_serial_numbers", (string)null);
+                    b.ToTable("item_receipt_item_serial_number", (string)null);
                 });
 
             modelBuilder.Entity("ams.domain.Items.Item", b =>
@@ -748,7 +751,7 @@ namespace ams.infrastructure.Migrations
                         .HasForeignKey("ItemReceiptDetailId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_item_receipt_item_serial_numbers_item_receipt_details_item_");
+                        .HasConstraintName("fk_item_receipt_item_serial_number_item_receipt_detail_item_re");
 
                     b.Navigation("ItemReceiptDetail");
                 });

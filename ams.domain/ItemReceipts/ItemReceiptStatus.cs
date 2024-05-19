@@ -2,6 +2,7 @@
 {
     public enum ItemReceiptStatus
     {
-        New = 1
+        New = 1,
+        ConvertedToAsset = 2
     }
 }
