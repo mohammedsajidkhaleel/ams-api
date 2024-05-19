@@ -45,11 +45,10 @@ namespace ams.domain.ItemReceipts
             itemReceipt.RaiseDomainEvent(new ItemReceiptCreatedDomainEvent(itemReceipt.Id));
             return itemReceipt;
         }
-        public static ItemReceipt Edit(ItemReceipt itemReceipt, string poNumber, string description, List<ItemReceiptDetail> details)
+        public static ItemReceipt Edit(ItemReceipt itemReceipt, string poNumber, string description)
         {
             itemReceipt.PONumber = poNumber;
             itemReceipt.Description = description;
-            itemReceipt.Details = details;
             itemReceipt.RaiseDomainEvent(new ItemReceiptUpdatedDomainEvent(itemReceipt.Id));
             return itemReceipt;
         }

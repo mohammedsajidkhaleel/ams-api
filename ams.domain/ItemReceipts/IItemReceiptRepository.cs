@@ -10,5 +10,6 @@ namespace ams.domain.ItemReceipts
     {
         Task<ItemReceipt?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
         void Add(ItemReceipt itemReceipt);
+        void RemoveAllDetails();
     }
 }

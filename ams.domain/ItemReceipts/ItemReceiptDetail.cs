@@ -12,17 +12,19 @@ public class ItemReceiptDetail : Entity
 
     }
     private ItemReceiptDetail(Guid id, Guid itemId, decimal quantity, string description,
-        List<ItemReceiptItemSerialNumber> serialNumbers) : base(id)
+        List<ItemReceiptItemSerialNumber> serialNumbers, ItemReceipt? itemReceipt) : base(id)
     {
         Id = id;
         ItemId = itemId;
         Quantity = quantity;
         Description = description;
-       // SerialNumbers = serialNumbers;
+        SerialNumbers = serialNumbers;
+        if (itemReceipt != null)
+            ItemReceipt = itemReceipt;
     }
-    public static ItemReceiptDetail Create(Guid itemId, decimal quantity, string description,List<ItemReceiptItemSerialNumber> serialNumbers)
+    public static ItemReceiptDetail Create(Guid itemId, decimal quantity, string description, List<ItemReceiptItemSerialNumber> serialNumbers, ItemReceipt? itemReceipt)
     {
-        var detail = new ItemReceiptDetail(Guid.NewGuid(), itemId, quantity, description,serialNumbers);
+        var detail = new ItemReceiptDetail(Guid.NewGuid(), itemId, quantity, description, serialNumbers, itemReceipt);
         return detail;
     }
 }

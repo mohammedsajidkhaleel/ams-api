@@ -26,26 +26,28 @@ internal sealed class EditItemReceiptCommandHandler : ICommandHandler<EditItemRe
         var itemReceipt = await _itemReceiptRepository.GetByIdAsync(request.ItemReceiptId);
         if (itemReceipt == null)
             return null;
-        foreach (var detail in itemReceipt.Details)
-            _itemReceiptDetailRepository.Remove(detail);
-        //itemReceipt.Details.Clear();
 
-        var itemDetails = new List<ItemReceiptDetail>();
+        var details = await _itemReceiptDetailRepository.GetByItemReceiptIdAsync(request.ItemReceiptId);
+        foreach ( var item in details)
+        {
+            itemReceipt.Details.Remove(item);
+        }
+
         foreach (var irdr in request.ItemDetails)
         {
             var itemSerialNumbers = new List<ItemReceiptItemSerialNumber>();
             foreach (var itemSerialNumber in irdr.SerialNumbers)
                 itemSerialNumbers.Add(new ItemReceiptItemSerialNumber(itemSerialNumber));
-            var id = ItemReceiptDetail.Create(irdr.ItemId, irdr.Quantity, irdr.Description, itemSerialNumbers);
-            itemDetails.Add(id);
+            var id = ItemReceiptDetail.Create(irdr.ItemId, irdr.Quantity, irdr.Description, itemSerialNumbers,itemReceipt);
+            _itemReceiptDetailRepository.Add(id);
         }
 
         ItemReceipt.Edit(
             itemReceipt,
             request.PONumber,
-            request.Description,
-            itemDetails
+            request.Description
         );
+        
         await _unitOfWork.SaveChangesAsync();
         return itemReceipt.Id;
     }

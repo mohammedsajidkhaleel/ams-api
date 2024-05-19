@@ -24,7 +24,8 @@ internal sealed class GetItemReceiptQueryHandler
         var query = """
             SELECT ID as Id,
             	ITEM_RECEIPT_NUMBER as ItemReceiptNumber,
-            	PO_NUMBER as PONumber
+            	PO_NUMBER as PONumber,
+                Description
             FROM ITEM_RECEIPTS
             Where Id = @ItemReceiptId;
             """;

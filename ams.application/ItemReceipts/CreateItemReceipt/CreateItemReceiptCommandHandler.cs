@@ -36,7 +36,7 @@ internal sealed class CreateItemReceiptCommandHandler : ICommandHandler<CreateIt
             var itemSerialNumbers = new List<ItemReceiptItemSerialNumber>();
             foreach (var itemSerialNumber in irdr.SerialNumbers)
                 itemSerialNumbers.Add(new ItemReceiptItemSerialNumber(itemSerialNumber));
-            var id = ItemReceiptDetail.Create(irdr.ItemId, irdr.Quantity, irdr.Description, itemSerialNumbers);
+            var id = ItemReceiptDetail.Create(irdr.ItemId, irdr.Quantity, irdr.Description, itemSerialNumbers,null);
             itemDetails.Add(id);
         }
 
