@@ -1,5 +1,7 @@
-﻿using ams.application.ItemReceipts.CreateItemReceipt;
+﻿using ams.application.ItemReceipts.ConvertToAsset;
+using ams.application.ItemReceipts.CreateItemReceipt;
 using ams.application.ItemReceipts.EditItemReceipt;
+using ams.application.ItemReceipts.GetForAssetConvert;
 using ams.application.ItemReceipts.GetItemReceipt;
 using ams.application.ItemReceipts.GetItemReceipts;
 using ams.domain.Abstractions;
@@ -7,6 +9,7 @@ using ams.domain.ItemReceipts;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading;
 
@@ -84,6 +87,29 @@ public class ItemReceiptsController : ControllerBase
         var result = await _sender.Send(command, cancellationToken);
         if (result == null)
             return NotFound("Item receipt not found");
+        return Ok(result);
+    }
+
+    [HttpPost("{id:guid}/assets")]
+    public async Task<IActionResult> ConvertToAsset([FromRoute] Guid Id, [FromBody] List<ItemReceiptAssetRequest> model)
+    {
+        var assetRequest = new List<AssetCreationRequest>();
+        foreach (var item in model)
+        {
+            assetRequest.Add(new AssetCreationRequest(item.ItemReceiptDetailId, item.ItemId, item.Code, item.Name, item.AssignedTo));
+        }
+        var command = new ConvertToAssetCommand(Id, assetRequest);
+        var result = await _sender.Send(command);
+        //return CreatedAtAction(nameof(ConvertToAsset),
+        //    new { id = result.Value }, result.Value);
+        return Ok();
+    }
+
+    [HttpGet("{id:guid}/assets")]
+    public async Task<IActionResult> GetForConvertToAsset([FromRoute] Guid Id)
+    {
+        var query = new GetForAssetConvertQuery(Id);
+        var result = await _sender.Send(query);
         return Ok(result);
     }
 }

@@ -16,5 +16,7 @@
     {
         public Guid ItemReceiptDetailId { get; set; }
         public string SerialNumber { get; set; }
+        public Guid? ItemId { get; set; }
+        public string ItemName { get; set; }
     }
 }
