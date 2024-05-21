@@ -96,7 +96,7 @@ public class ItemReceiptsController : ControllerBase
         var assetRequest = new List<AssetCreationRequest>();
         foreach (var item in model)
         {
-            assetRequest.Add(new AssetCreationRequest(item.ItemReceiptDetailId, item.ItemId, item.Code, item.Name, item.AssignedTo));
+            assetRequest.Add(new AssetCreationRequest(item.ItemReceiptSerialId, item.Code, item.Name, item.AssignedTo));
         }
         var command = new ConvertToAssetCommand(Id, assetRequest);
         var result = await _sender.Send(command);

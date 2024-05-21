@@ -1,8 +1,7 @@
 ﻿namespace ams.api.Controllers.ItemReceipts;
 
 public record ItemReceiptAssetRequest(
-    Guid ItemReceiptDetailId,
-    Guid ItemId,
+    Guid ItemReceiptSerialId,
     string Code,
     string Name,
     Guid? AssignedTo

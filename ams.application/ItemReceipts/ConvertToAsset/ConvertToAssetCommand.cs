@@ -8,7 +8,6 @@ public sealed record ConvertToAssetCommand(Guid ItemReceiptId,List<AssetCreation
 }
 
 public sealed record AssetCreationRequest(Guid ItemReceiptSerialNumberId,
-    Guid ItemId,
     string AssetCode,
     string AssetName,
     Guid? AssignedTo);

@@ -1,13 +1,7 @@
 ﻿using ams.application.Abstractions.Data;
 using ams.application.Abstractions.Messaging;
-using ams.application.Items.GetItem;
 using ams.domain.Abstractions;
 using Dapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ams.application.ItemReceipts.GetItemReceipt;
 internal sealed class GetItemReceiptQueryHandler
@@ -25,7 +19,8 @@ internal sealed class GetItemReceiptQueryHandler
             SELECT ID as Id,
             	ITEM_RECEIPT_NUMBER as ItemReceiptNumber,
             	PO_NUMBER as PONumber,
-                Description
+                Description,
+                Status
             FROM ITEM_RECEIPTS
             Where Id = @ItemReceiptId;
             """;

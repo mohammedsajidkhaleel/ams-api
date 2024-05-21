@@ -52,5 +52,9 @@ namespace ams.domain.ItemReceipts
             itemReceipt.RaiseDomainEvent(new ItemReceiptUpdatedDomainEvent(itemReceipt.Id));
             return itemReceipt;
         }
+        public static void SetStatus(ItemReceipt itemReceipt, ItemReceiptStatus status)
+        {
+            itemReceipt.Status = status;
+        }
     }
 }
