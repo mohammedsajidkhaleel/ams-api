@@ -1,20 +1,20 @@
-﻿
-using ams.application.Abstractions.Data;
+﻿using ams.application.Abstractions.Data;
 using ams.application.Abstractions.Messaging;
-using ams.application.Items.GetItem;
+using ams.application.Employees.GetEmployees;
+using ams.application.Reports.ActiveEmployees;
 using ams.domain.Abstractions;
-using Dapper;
 
-namespace ams.application.Employees.GetEmployees;
-internal sealed class GetEmployeesQueryHandler
-    : IQueryHandler<GetEmployeesQuery, IReadOnlyList<EmployeeResponse>>
+namespace ams.application.Reports.GetActiveEmployees;
+
+public sealed class GetActiveEmployeeQueryHandler
+    : IQueryHandler<GetActiveEmployeeQuery, IReadOnlyList<EmployeeResponse>>
 {
-    private readonly ISqlConnectionFactory _sqlConnectionFactory;
-    public GetEmployeesQueryHandler(ISqlConnectionFactory sqlConnectionFactory)
+    private ISqlConnectionFactory _sqlConnectionFactory;
+    public GetActiveEmployeeQueryHandler(ISqlConnectionFactory sqlConnectionFactory)
     {
         _sqlConnectionFactory = sqlConnectionFactory;
     }
-    public async Task<Result<IReadOnlyList<EmployeeResponse>>> Handle(GetEmployeesQuery request, CancellationToken cancellationToken)
+    public async Task<Result<IReadOnlyList<EmployeeResponse>>> Handle(GetActiveEmployeeQuery request, CancellationToken cancellationToken)
     {
         using var connection = _sqlConnectionFactory.CreateConnection();
         var query = """
@@ -40,21 +40,11 @@ internal sealed class GetEmployeesQueryHandler
             FROM EMPLOYEES E
             LEFT JOIN SPONSORS S ON S.ID = E.SPONSOR_ID
             LEFT JOIN DEPARTMENTS D ON D.ID = E.DEPARTMENT_ID
-            LEFT JOIN EMPLOYEE_CATOGORIES EC ON EC.ID = E.EMPLOYEE_CATEGORY_ID
+            LEFT JOIN EMPLOYEE_CAToGORIES EC ON EC.ID = E.EMPLOYEE_CATEGORY_ID
             LEFT JOIN NATIONALITIES N ON N.ID = E.NATIONALITY_ID
             LEFT JOIN EMPLOYEE_POSITIONS EP ON EP.ID = E.EMPLOYEE_POSITION_ID
             LEFT JOIN PROJECTS P ON P.ID = E.PROJECT_ID
-            WHERE E.STATUS = 1 AND (@projectId is null or E.ProjectId = @projectId
+            WHERE 
             """;
-        var employees = await connection
-            .QueryAsync<EmployeeResponse>(
-            query,
-            new
-            {
-                request.projectId
-            }
-            );
-        return employees.ToList();
     }
 }
-
