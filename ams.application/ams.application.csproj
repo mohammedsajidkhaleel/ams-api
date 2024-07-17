@@ -15,4 +15,4 @@
     <ProjectReference Include="..\ams.domain\ams.domain.csproj" />
   </ItemGroup>
 
-</Project>
+</Project> 
