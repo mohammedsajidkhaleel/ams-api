@@ -44,10 +44,10 @@ namespace ams.infrastructure
 
         private static void AddPersistance(IServiceCollection services, IConfiguration configuration)
         {
-            var connectionString = configuration.GetConnectionString("Database") ??
-                            throw new ArgumentNullException(nameof(configuration));
-            var identityConnectionString = configuration.GetConnectionString("IdentityDatabase") ??
-                            throw new ArgumentNullException(nameof(configuration));
+            var connectionString = Environment.GetEnvironmentVariable("AMS_CONNECTION_STRING"); 
+            //configuration.GetConnectionString("Database") ?? throw new ArgumentNullException(nameof(configuration));
+            var identityConnectionString = Environment.GetEnvironmentVariable("IDENTITY_CONNTECTION_STRING");
+            //configuration.GetConnectionString("IdentityDatabase") ?? throw new ArgumentNullException(nameof(configuration));
             services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseNpgsql(connectionString).UseSnakeCaseNamingConvention();
