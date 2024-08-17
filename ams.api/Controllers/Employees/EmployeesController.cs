@@ -81,7 +81,7 @@ public class EmployeesController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAllEmployees(CancellationToken cancellationToken = default)
     {
-        var query = new GetEmployeesQuery();
+        var query = new GetEmployeesQuery(null);
         var employees = await _sender.Send(query, cancellationToken);
         return Ok(employees);
     }
