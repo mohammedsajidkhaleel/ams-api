@@ -44,7 +44,7 @@ internal sealed class GetEmployeesQueryHandler
             LEFT JOIN NATIONALITIES N ON N.ID = E.NATIONALITY_ID
             LEFT JOIN EMPLOYEE_POSITIONS EP ON EP.ID = E.EMPLOYEE_POSITION_ID
             LEFT JOIN PROJECTS P ON P.ID = E.PROJECT_ID
-            WHERE E.STATUS = 1 AND (@projectId is null or E.ProjectId = @projectId
+            WHERE E.STATUS = 1 AND (@projectId is null or E.ProjectId = @projectId)
             """;
         var employees = await connection
             .QueryAsync<EmployeeResponse>(
