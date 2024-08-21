@@ -1,5 +1,5 @@
 ﻿using FastReport;
-using FastReport.Export.PdfSimple;
+using FastReport.Export.Pdf;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,7 +19,7 @@ namespace ams.api.Controllers.Reports
             report.SetParameterValue("ReportTitle", "Emplyee Card");
             if (report.Prepare())
             {
-                var pdfExport = new PDFSimpleExport();
+                var pdfExport = new PDFExport();
                 pdfExport.ShowProgress = false;
                 MemoryStream ms = new MemoryStream();
                 report.Report.Export(pdfExport,ms);
