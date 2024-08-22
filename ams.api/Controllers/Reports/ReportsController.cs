@@ -1,5 +1,5 @@
 ﻿using FastReport;
-using FastReport.Export.Pdf;
+using FastReport.Export.PdfSimple;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,11 +15,11 @@ namespace ams.api.Controllers.Reports
         public async Task<IActionResult> GetEmployee()
         {
             Report report = new Report();
-            report.Load("Reports\\Employee.frx");
+            report.Load("Reports/Employee.frx");
             report.SetParameterValue("ReportTitle", "Emplyee Card");
             if (report.Prepare())
             {
-                var pdfExport = new PDFExport();
+                var pdfExport = new PDFSimpleExport();
                 pdfExport.ShowProgress = false;
                 MemoryStream ms = new MemoryStream();
                 report.Report.Export(pdfExport,ms);
