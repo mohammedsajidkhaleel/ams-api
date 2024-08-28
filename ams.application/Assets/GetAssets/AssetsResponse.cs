@@ -12,6 +12,7 @@ public sealed class AssetsResponse
     public string EmployeeName { get; set; }
     public string ProjectName { get; set; }
     public DateTimeOffset CreationDateTime { get; set; }
+    public Guid ItemId { get; set; }
     public string ItemName { get; set; }
     public string PONumber { get; set; }
     public AssetStatus Status { get; set; }

@@ -36,7 +36,8 @@ internal sealed class GetAssetsQueryHandler
             	A.STATUS,
             	A.PO_NUMBER AS PONumber,
             	A.ITEM_ID AS ITEMID,
-            	I.NAME AS ITEMNAME
+            	I.NAME AS ITEMNAME,
+                A.ITEM_ID
             FROM ASSETS A
             LEFT JOIN EMPLOYEES E ON E.ID = A.ASSIGNED_TO
             LEFT JOIN PROJECTS P ON P.ID = E.PROJECT_ID
