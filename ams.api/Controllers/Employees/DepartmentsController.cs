@@ -17,11 +17,20 @@ namespace ams.api.Controllers.Employees
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetDepartments(
-            Guid? departmentId, Guid? parentDepartmentId, CancellationToken cancellationToken = default
+        public async Task<IActionResult> GetDepartments(CancellationToken cancellationToken = default
             )
         {
-            var query = new GetDepartmentQuery(departmentId, parentDepartmentId);
+            var query = new GetDepartmentQuery(null, null);
+            var result = await _sender.Send(query, cancellationToken);
+            return Ok(result);
+        }
+
+        [HttpGet("{departmentId:guid}/childs")]
+        public async Task<IActionResult> GetDepartmentsByParentId(
+           Guid? departmentId, CancellationToken cancellationToken = default
+           )
+        {
+            var query = new GetDepartmentQuery(null, departmentId);
             var result = await _sender.Send(query, cancellationToken);
             return Ok(result);
         }

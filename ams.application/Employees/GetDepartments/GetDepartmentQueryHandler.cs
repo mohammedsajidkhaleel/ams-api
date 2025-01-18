@@ -32,10 +32,16 @@ namespace ams.application.Employees.GetDepartments
             FROM departments d
             left join departments dd
                 on dd.parent_department_id = d.id
+            where ((@parentdepartmentid is null and d.parent_department_id is null) or d.parent_department_id = @parentdepartmentid)
+            and d.is_deleted = false
             """;
             var departments = await connection
                 .QueryAsync<DepartmentResponse>(
-                query
+                query,
+               new
+               {
+                   parentdepartmentid = request.parentDepartmentId
+               }
                 );
             return departments.ToList();
         }

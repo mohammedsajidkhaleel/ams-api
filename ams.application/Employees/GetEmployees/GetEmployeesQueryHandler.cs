@@ -1,23 +1,33 @@
-﻿
-using ams.application.Abstractions.Data;
+﻿using ams.application.Abstractions.Data;
 using ams.application.Abstractions.Messaging;
-using ams.application.Items.GetItem;
+using ams.application.Assets.GetAssets;
+using ams.application.Models;
 using ams.domain.Abstractions;
 using Dapper;
 
 namespace ams.application.Employees.GetEmployees;
 internal sealed class GetEmployeesQueryHandler
-    : IQueryHandler<GetEmployeesQuery, IReadOnlyList<EmployeeResponse>>
+    : IQueryHandler<GetEmployeesQuery, PaginatedResponse<EmployeeResponse>>
 {
     private readonly ISqlConnectionFactory _sqlConnectionFactory;
     public GetEmployeesQueryHandler(ISqlConnectionFactory sqlConnectionFactory)
     {
         _sqlConnectionFactory = sqlConnectionFactory;
     }
-    public async Task<Result<IReadOnlyList<EmployeeResponse>>> Handle(GetEmployeesQuery request, CancellationToken cancellationToken)
+    public async Task<Result<PaginatedResponse<EmployeeResponse>>> Handle(GetEmployeesQuery request, CancellationToken cancellationToken)
     {
         using var connection = _sqlConnectionFactory.CreateConnection();
+        string searchQuery = null;
+        if (string.IsNullOrWhiteSpace(request.searchQuery))
+            searchQuery = '%' + request.searchQuery + '%';
+
         var query = """
+            SELECT COUNT(*) AS COUNT
+            FROM EMPLOYEES
+            WHERE STATUS = 1 
+            AND (@projectid is null or Project_Id = @projectid)
+            AND (@searchquery is null or Name like @searchquery);
+
             SELECT E.ID,
             	E.CODE,
             	E.NAME,
@@ -44,17 +54,28 @@ internal sealed class GetEmployeesQueryHandler
             LEFT JOIN NATIONALITIES N ON N.ID = E.NATIONALITY_ID
             LEFT JOIN EMPLOYEE_POSITIONS EP ON EP.ID = E.EMPLOYEE_POSITION_ID
             LEFT JOIN PROJECTS P ON P.ID = E.PROJECT_ID
-            WHERE E.STATUS = 1 AND (@projectId is null or E.Project_Id = @projectId)
+            WHERE E.STATUS = 1 
+            AND (@projectid is null or E.Project_Id = @projectid)
+            AND (@searchquery is null or E.Name like @searchquery)
+            order by E.NAME
+            OFFSET @offset ROWS
+            FETCH NEXT @limit ROWS ONLY;
             """;
-        var employees = await connection
-            .QueryAsync<EmployeeResponse>(
-            query,
-            new
-            {
-                request.projectId
-            }
-            );
-        return employees.ToList();
+
+        var response = new PaginatedResponse<EmployeeResponse>();
+        using (var multi = await connection.QueryMultipleAsync(query,
+           new
+           {
+               projectid = request.projectId,
+               searchquery = searchQuery,
+               offset = request.pageIndex * request.pageSize,
+               limit = request.pageSize
+           }))
+        {
+            response.TotalItems = await multi.ReadFirstOrDefaultAsync<int>();
+            response.Items = multi.Read<EmployeeResponse>().ToList();
+        }
+        return response;
     }
 }
 

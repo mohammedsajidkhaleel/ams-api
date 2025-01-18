@@ -6,8 +6,8 @@
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "AMS_CONNECTION_STRING": "Host=localhost;Port=5432;Database=saliniams;Username=postgres;Password=postgres;",
-        "IDENTITY_CONNTECTION_STRING": "Host=localhost;Port=5432;Database=saliniams-identity;Username=postgres;Password=postgres;"
+        "AMS_CONNECTION_STRING": "Host=localhost;Port=5432;Database=saliniams-new;Username=postgres;Password=postgres;",
+        "IDENTITY_CONNTECTION_STRING": "Host=localhost;Port=5432;Database=saliniams-new-identity;Username=postgres;Password=postgres;"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:5132"
@@ -18,8 +18,8 @@
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "AMS_CONNECTION_STRING": "Host=localhost;Port=5432;Database=saliniams;Username=postgres;Password=postgres;",
-        "IDENTITY_CONNTECTION_STRING": "Host=localhost;Port=5432;Database=saliniams-identity;Username=postgres;Password=postgres;"
+        "AMS_CONNECTION_STRING": "Host=localhost;Port=5432;Database=saliniams-new;Username=postgres;Password=postgres;",
+        "IDENTITY_CONNTECTION_STRING": "Host=localhost;Port=5432;Database=saliniams-new-identity;Username=postgres;Password=postgres;"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "https://localhost:7227;http://localhost:5132"
@@ -30,8 +30,8 @@
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "AMS_CONNECTION_STRING": "Host=localhost;Port=5432;Database=saliniams;Username=postgres;Password=postgres;",
-        "IDENTITY_CONNTECTION_STRING": "Host=localhost;Port=5432;Database=saliniams-identity;Username=postgres;Password=postgres;"
+        "AMS_CONNECTION_STRING": "Host=localhost;Port=5432;Database=saliniams-new;Username=postgres;Password=postgres;",
+        "IDENTITY_CONNTECTION_STRING": "Host=localhost;Port=5432;Database=saliniams-new-identity;Username=postgres;Password=postgres;"
       }
     },
     "Container (Dockerfile)": {
@@ -40,8 +40,8 @@
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
       "environmentVariables": {
         "ASPNETCORE_HTTP_PORTS": "80",
-        "AMS_CONNECTION_STRING": "Host=localhost;Port=5432;Database=saliniams;Username=postgres;Password=postgres;",
-        "IDENTITY_CONNTECTION_STRING": "Host=localhost;Port=5432;Database=saliniams-identity;Username=postgres;Password=postgres;"
+        "AMS_CONNECTION_STRING": "Host=localhost;Port=5432;Database=saliniams-new;Username=postgres;Password=postgres;",
+        "IDENTITY_CONNTECTION_STRING": "Host=localhost;Port=5432;Database=saliniams-new-identity;Username=postgres;Password=postgres;"
       },
       "publishAllPorts": true,
       "useSSL": true

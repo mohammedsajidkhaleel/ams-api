@@ -14,7 +14,7 @@ options.AddPolicy(name: allowedOrigins,
 policy =>
 {
     var corsOrigins = builder.Configuration.GetValue<string>("ApplicationSettings:AllowedCorsOrigins").Split(',');
-    policy.WithOrigins(corsOrigins).WithHeaders("*").WithMethods("*");
+    policy.WithOrigins("*").WithHeaders("*").WithMethods("*");
 })
     );
 
