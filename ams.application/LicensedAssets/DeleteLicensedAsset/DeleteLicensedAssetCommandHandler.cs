@@ -17,11 +17,13 @@ internal sealed class DeleteLicensedAssetCommandHandler
         DeleteLicensedAssetCommand request,
         CancellationToken cancellationToken)
     {
-       var licensedAsset = await _licensedAssetRepository.GetByIdAsync(request.LicensedAssetId,cancellationToken);
-        if(licensedAsset != null) {
-            _licensedAssetRepository.Remove(licensedAsset);
-            await _unitOfWork.SaveChangesAsync();
-        }
+        var licensedAsset = await _licensedAssetRepository.GetByIdAsync(request.LicensedAssetId, cancellationToken);
+        if (licensedAsset == null)
+            return Guid.Empty;
+
+        _licensedAssetRepository.Remove(licensedAsset);
+        await _unitOfWork.SaveChangesAsync();
+
         return licensedAsset.Id;
     }
 }

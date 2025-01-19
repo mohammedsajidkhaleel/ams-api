@@ -5,6 +5,7 @@ public sealed class EmployeeResponse
     public string Code { get; set; }
     public string Name { get; set; }
     public Guid? SponsorId { get; set; }
+    public Guid? ParentDepartmentId { get; set; }
     public Guid? DepartmentId { get; set; }
     public Guid? EmployeeCategoryId { get; set; }
     public Guid? NationalityId { get; set; }

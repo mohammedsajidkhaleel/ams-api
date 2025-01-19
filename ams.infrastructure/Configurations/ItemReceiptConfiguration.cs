@@ -1,11 +1,6 @@
 ﻿using ams.domain.ItemReceipts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ams.infrastructure.Configurations
 {
@@ -19,7 +14,7 @@ namespace ams.infrastructure.Configurations
             builder.HasIndex(item => item.ItemReceiptNumber).IsUnique();
             builder.Property(i => i.IsDeleted)
                 .HasDefaultValue(false);
-           
+
         }
     }
 }

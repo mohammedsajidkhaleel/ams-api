@@ -15,4 +15,9 @@
     <ProjectReference Include="..\ams.domain\ams.domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Sims\EditSim\" />
+    <Folder Include="Sims\DeleteSim\" />
+  </ItemGroup>
+
 </Project> 

@@ -2,6 +2,9 @@
 using ams.application.LicensedAssets.CreateLicensedAsset;
 using ams.application.LicensedAssets.DeleteLicensedAsset;
 using ams.application.LicensedAssets.GetLicencedAssets;
+using ams.application.LicensedEmployees.CreateLicensedEmployee;
+using ams.application.LicensedEmployees.DeleteLicensedEmployee;
+using ams.application.LicensedEmployees.GetLicencedEmployees;
 using ams.application.Licenses.CreateLicense;
 using ams.application.Licenses.DeleteLicense;
 using ams.application.Licenses.EditLicense;
@@ -103,6 +106,30 @@ public class LicenseController : ControllerBase
     public async Task<IActionResult> RemoveLicenseFromAsset(Guid id, CancellationToken cancellationToken)
     {
         var query = new DeleteLicensedAssetCommand(id);
+        var result = await _sender.Send(query, cancellationToken);
+        return Ok(result);
+    }
+
+    [HttpGet("{id:Guid}/employees")]
+    public async Task<IActionResult> GetLicensedEmployees([FromRoute] Guid id, [FromQuery] int? pageIndex = 0, [FromQuery] int? pageSize = 50)
+    {
+        var query = new GetLicensedEmployeeQuery(id, pageIndex ?? 0, pageSize ?? 50);
+        var result = await _sender.Send(query);
+        return Ok(result);
+    }
+
+    [HttpPost("{id:Guid}/employees")]
+    public async Task<IActionResult> AssignLicenseToEmployee([FromRoute] Guid id, [FromBody] LicensedEmployeeRequest model, CancellationToken cancellationToken)
+    {
+        var query = new CreateLicensedEmployeeCommand(id, model.EmployeeId, HttpContext.User.GetLoggedInUser());
+        var result = await _sender.Send(query, cancellationToken);
+        return Ok(result);
+    }
+
+    [HttpDelete("employees/{id:Guid}")]
+    public async Task<IActionResult> RemoveLicenseFromEmployee(Guid id, CancellationToken cancellationToken)
+    {
+        var query = new DeleteLicensedEmployeeCommand(id);
         var result = await _sender.Send(query, cancellationToken);
         return Ok(result);
     }

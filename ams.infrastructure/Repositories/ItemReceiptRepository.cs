@@ -16,6 +16,6 @@ internal sealed class ItemReceiptRepository : Repository<ItemReceipt>, IItemRece
         var details = _dbContext
                          .Set<ItemReceipt>()
                          .Select(i => i.Details);
-        
+
     }
 }

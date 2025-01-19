@@ -17,7 +17,7 @@ namespace ams.infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.4")
+                .HasAnnotation("ProductVersion", "8.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -570,6 +570,39 @@ namespace ams.infrastructure.Migrations
                     b.ToTable("licensed_assets", (string)null);
                 });
 
+            modelBuilder.Entity("ams.domain.LicensedEmployees.LicensedEmployee", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uuid")
+                        .HasColumnName("created_by");
+
+                    b.Property<DateTimeOffset>("CreationDateTime")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("creation_date_time");
+
+                    b.Property<Guid>("EmployeeId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("employee_id");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_deleted");
+
+                    b.Property<Guid>("LicenseId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("license_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_licensed_employees");
+
+                    b.ToTable("licensed_employees", (string)null);
+                });
+
             modelBuilder.Entity("ams.domain.Licenses.License", b =>
                 {
                     b.Property<Guid>("Id")
@@ -661,6 +694,76 @@ namespace ams.infrastructure.Migrations
                         .HasName("pk_projects");
 
                     b.ToTable("projects", (string)null);
+                });
+
+            modelBuilder.Entity("ams.domain.Sims.Sim", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<Guid?>("AssignedTo")
+                        .HasColumnType("uuid")
+                        .HasColumnName("assigned_to");
+
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uuid")
+                        .HasColumnName("created_by");
+
+                    b.Property<DateTimeOffset>("CreationDateTime")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("creation_date_time");
+
+                    b.Property<string>("Imei1")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("imei1");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false)
+                        .HasColumnName("is_deleted");
+
+                    b.Property<DateTimeOffset?>("LastUpdateDateTime")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("last_update_date_time");
+
+                    b.Property<string>("ServiceAccount")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("service_account");
+
+                    b.Property<string>("ServiceNumber")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("service_number");
+
+                    b.Property<string>("SimCardNumber")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("sim_card_number");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer")
+                        .HasColumnName("status");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("uuid")
+                        .HasColumnName("updated_by");
+
+                    b.HasKey("Id")
+                        .HasName("pk_sims");
+
+                    b.HasIndex("AssignedTo")
+                        .HasDatabaseName("ix_sims_assigned_to");
+
+                    b.ToTable("sims", (string)null);
                 });
 
             modelBuilder.Entity("ams.domain.Assets.Asset", b =>
@@ -769,6 +872,14 @@ namespace ams.infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("ParentItemCategoryId")
                         .HasConstraintName("fk_item_categories_item_categories_parent_item_category_id");
+                });
+
+            modelBuilder.Entity("ams.domain.Sims.Sim", b =>
+                {
+                    b.HasOne("ams.domain.Employees.Employee", null)
+                        .WithMany()
+                        .HasForeignKey("AssignedTo")
+                        .HasConstraintName("fk_sims_employees_assigned_to");
                 });
 
             modelBuilder.Entity("ams.domain.ItemReceipts.ItemReceipt", b =>

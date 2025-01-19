@@ -1,6 +1,4 @@
 ﻿using ams.domain.LicensedAssets;
-using ams.domain.Licenses;
-using ams.domain.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

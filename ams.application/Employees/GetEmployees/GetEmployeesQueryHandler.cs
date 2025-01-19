@@ -43,6 +43,8 @@ internal sealed class GetEmployeesQueryHandler
             	E.CREATION_DATE_TIME AS CREATIONDATETIME,
             	S.NAME AS SPONSORNAME,
             	D.NAME AS DEPARTMENTNAME,
+                DD.Id As ParentDepartmentId,
+                DD.NAME AS ParentDepartmentName,
             	EC.NAME AS EMPLOYEECATEGORYNAME,
             	N.NAME AS NATIONALITYNAME,
             	EP.NAME AS EMPLOYEEPOSITIONNAME,
@@ -50,6 +52,7 @@ internal sealed class GetEmployeesQueryHandler
             FROM EMPLOYEES E
             LEFT JOIN SPONSORS S ON S.ID = E.SPONSOR_ID
             LEFT JOIN DEPARTMENTS D ON D.ID = E.DEPARTMENT_ID
+            LEFT JOIN DEPARTMENTS DD ON D.Parent_Department_Id = DD.Id
             LEFT JOIN EMPLOYEE_CATOGORIES EC ON EC.ID = E.EMPLOYEE_CATEGORY_ID
             LEFT JOIN NATIONALITIES N ON N.ID = E.NATIONALITY_ID
             LEFT JOIN EMPLOYEE_POSITIONS EP ON EP.ID = E.EMPLOYEE_POSITION_ID

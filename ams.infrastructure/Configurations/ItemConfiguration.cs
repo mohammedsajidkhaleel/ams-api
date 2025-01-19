@@ -1,5 +1,4 @@
-﻿using ams.domain.Employees;
-using ams.domain.Items;
+﻿using ams.domain.Items;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

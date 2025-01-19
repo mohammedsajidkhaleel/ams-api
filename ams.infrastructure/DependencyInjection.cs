@@ -6,16 +6,13 @@ using ams.domain.Employees;
 using ams.domain.ItemReceipts;
 using ams.domain.Items;
 using ams.domain.LicensedAssets;
+using ams.domain.LicensedEmployees;
 using ams.domain.Licenses;
+using ams.domain.Sims;
 using ams.infrastructure.Clock;
 using ams.infrastructure.Data;
 using ams.infrastructure.Repositories;
-using Microsoft.AspNetCore.Authentication.BearerToken;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Hosting.Builder;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.AspNetCore.Server.HttpSys;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -37,6 +34,8 @@ namespace ams.infrastructure
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             services.AddScoped<ILicenseRepository, LicenseRepository>();
             services.AddScoped<ILicensedAssetRepository, LicensedAssetRepository>();
+            services.AddScoped<ILicensedEmployeeRepository, LicensedEmployeeRepository>();
+            services.AddScoped<ISimRepository, SimRepository>();
             services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<ApplicationDbContext>());
 
             return services;
@@ -44,10 +43,10 @@ namespace ams.infrastructure
 
         private static void AddPersistance(IServiceCollection services, IConfiguration configuration)
         {
-            var connectionString = Environment.GetEnvironmentVariable("AMS_CONNECTION_STRING"); 
-            //configuration.GetConnectionString("Database") ?? throw new ArgumentNullException(nameof(configuration));
-            var identityConnectionString = Environment.GetEnvironmentVariable("IDENTITY_CONNTECTION_STRING");
-            //configuration.GetConnectionString("IdentityDatabase") ?? throw new ArgumentNullException(nameof(configuration));
+            var connectionString = //Environment.GetEnvironmentVariable("AMS_CONNECTION_STRING");
+            configuration.GetConnectionString("Database") ?? throw new ArgumentNullException(nameof(configuration));
+            var identityConnectionString = //Environment.GetEnvironmentVariable("IDENTITY_CONNTECTION_STRING");
+            configuration.GetConnectionString("IdentityDatabase") ?? throw new ArgumentNullException(nameof(configuration));
             services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseNpgsql(connectionString).UseSnakeCaseNamingConvention();
