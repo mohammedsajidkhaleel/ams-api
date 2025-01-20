@@ -24,11 +24,11 @@ internal sealed class GetSimsQueryHandler
             WHERE IS_DELETED = FALSE;
 
             select s.id,
-            s.service_account,
-            s.service_number,
-            s.sim_card_number,
-            s.imei1,
-            s.assigned_to,
+            s.service_account as ServiceAccount,
+            s.service_number as ServiceNumber,
+            s.sim_card_number as SimCardNumber,
+            s.imei1 as Imei1,
+            s.assigned_to as AssignedTo,
             e.name as assignedemployeename,
             e.code as assignedempployeecode,
             case when s.status = 1 then 'Assigned'

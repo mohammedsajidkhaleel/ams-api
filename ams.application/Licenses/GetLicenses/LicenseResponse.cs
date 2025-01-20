@@ -8,4 +8,5 @@ public sealed class LicenseResponse
     public string ExpirationDate { get; set; }
     public string TotalLicenses { get; set; }
     public string CreationDateTime { get; set; }
+    public string PoNumber { get; set; }
 }
