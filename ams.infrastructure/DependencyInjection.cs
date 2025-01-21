@@ -2,6 +2,7 @@
 using ams.application.Abstractions.Data;
 using ams.domain.Abstractions;
 using ams.domain.Assets;
+using ams.domain.EmployeeAccessories;
 using ams.domain.Employees;
 using ams.domain.ItemReceipts;
 using ams.domain.Items;
@@ -36,6 +37,7 @@ namespace ams.infrastructure
             services.AddScoped<ILicensedAssetRepository, LicensedAssetRepository>();
             services.AddScoped<ILicensedEmployeeRepository, LicensedEmployeeRepository>();
             services.AddScoped<ISimRepository, SimRepository>();
+            services.AddScoped<IEmployeeAccessoryRepository, EmployeeAccessoryRepository>();
             services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<ApplicationDbContext>());
 
             return services;
