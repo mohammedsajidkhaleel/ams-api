@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="01/21/2025 17:50:43" ReportInfo.Modified="01/21/2025 17:56:10" ReportInfo.CreatorVersion="2025.1.0.0">
+  <Dictionary>
+    <XmlDataConnection Name="Connection" ConnectionString="rijcmlqOF2CM2eIk89wVMHQuYHUgkRYiuRF3dWpLiLHFv8/CNrChwpLk4pBYeXAD1beYujdjA9XyXKnzhCINpNT7eJueYmuXgNXukMx8CHZE4Xspqs=">
+      <TableDataSource Name="Employee" Alias="Employees" DataType="System.Int32" Enabled="true" TableName="Employee">
+        <Column Name="code" DataType="System.String"/>
+        <Column Name="name" DataType="System.String"/>
+        <Column Name="department" DataType="System.String"/>
+        <Column Name="subDepartment" DataType="System.String"/>
+        <Column Name="nationality" DataType="System.String"/>
+        <Column Name="position" DataType="System.String"/>
+        <Column Name="mobile" DataType="System.String"/>
+        <Column Name="email" DataType="System.String"/>
+      </TableDataSource>
+    </XmlDataConnection>
+  </Dictionary>
+  <ReportPage Name="Page1" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="37.8"/>
+    <PageHeaderBand Name="PageHeader1" Top="41.8" Width="718.2" Height="28.35">
+      <TextObject Name="Text2" Left="9.45" Width="94.5" Height="18.9" Text="code" Font="Arial, 10pt"/>
+      <TextObject Name="Text4" Left="113.4" Width="94.5" Height="18.9" Text="name" Font="Arial, 10pt"/>
+      <TextObject Name="Text6" Left="217.35" Width="94.5" Height="18.9" Text="department" Font="Arial, 10pt"/>
+      <TextObject Name="Text8" Left="321.3" Width="94.5" Height="18.9" Text="mobile" Font="Arial, 10pt"/>
+      <TextObject Name="Text10" Left="425.25" Width="94.5" Height="18.9" Text="email" Font="Arial, 10pt"/>
+    </PageHeaderBand>
+    <DataBand Name="Data1" Top="74.15" Width="718.2" Height="75.6" DataSource="Employee">
+      <TextObject Name="Text1" Left="9.45" Top="9.45" Width="94.5" Height="18.9" Text="[Employees.code]" Font="Arial, 10pt"/>
+      <TextObject Name="Text3" Left="113.4" Top="9.45" Width="94.5" Height="18.9" Text="[Employees.name]" Font="Arial, 10pt"/>
+      <TextObject Name="Text5" Left="217.35" Top="9.45" Width="94.5" Height="18.9" Text="[Employees.department]" Font="Arial, 10pt"/>
+      <TextObject Name="Text7" Left="321.3" Top="9.45" Width="94.5" Height="18.9" Text="[Employees.mobile]" Font="Arial, 10pt"/>
+      <TextObject Name="Text9" Left="425.25" Top="9.45" Width="94.5" Height="18.9" Text="[Employees.email]" Font="Arial, 10pt"/>
+    </DataBand>
+    <PageFooterBand Name="PageFooter1" Top="153.75" Width="718.2" Height="18.9"/>
+  </ReportPage>
+</Report>

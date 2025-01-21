@@ -4,8 +4,11 @@ using ams.application.Assets.EditAsset;
 using ams.application.Employees.CreateEmployee;
 using ams.application.Employees.DeleteEmployee;
 using ams.application.Employees.EditEmployee;
+using ams.application.Employees.GetEmployee;
 using ams.application.Employees.GetEmployees;
 using ams.domain.Abstractions;
+using FastReport;
+using FastReport.Export.PdfSimple;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -87,5 +90,34 @@ public class EmployeesController : ControllerBase
         var query = new GetEmployeesQuery(pageIndex, pageSize, null, searchQuery);
         var employees = await _sender.Send(query, cancellationToken);
         return Ok(employees);
+    }
+
+
+    [HttpGet("{employeeId:Guid}/report")]
+    public async Task<IActionResult> GetEmployeeReport(Guid employeeId,
+       CancellationToken cancellationToken = default)
+    {
+        var query = new GetEmployeeQuery(employeeId);
+        var employee = await _sender.Send(query, cancellationToken);
+        Report report = new Report();
+        report.Load("Reports/EmployeeDetails.frx");
+        report.SetParameterValue("Name", employee.Value.Name);
+        report.RegisterData(employee.Value.AssignedAccessories, "Accessories");
+        report.RegisterData(employee.Value.AssignedAssets, "Assets");
+        report.RegisterData(employee.Value.AssignedLicenses, "Licenses");
+        
+        if (report.Prepare())
+        {
+            var pdfExport = new PDFSimpleExport();
+            pdfExport.ShowProgress = false;
+            MemoryStream ms = new MemoryStream();
+            report.Report.Export(pdfExport, ms);
+            report.Dispose();
+            pdfExport.Dispose();
+            ms.Position = 0;
+            return File(ms, "application/pdf", "employee.pdf");
+
+        }
+        return Ok();
     }
 }
