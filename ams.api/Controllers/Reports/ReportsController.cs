@@ -44,7 +44,7 @@ namespace ams.api.Controllers.Reports
         public async Task<IActionResult> GetContactList()
         {
             Report report = new Report();
-            report.Load("Reports/test1.frx");
+            report.Load("Reports/ContactList.frx");
             var query = new GetContactListQuery();
             var employees = await _sender.Send(query);
             report.RegisterData(employees.Value, "Employees");
