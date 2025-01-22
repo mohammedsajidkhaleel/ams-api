@@ -17,4 +17,7 @@ public sealed class AssetsResponse
     public string PONumber { get; set; }
     public AssetStatus Status { get; set; }
     public string StatusName { get { return Enum.GetName(typeof(AssetStatus), Status); } }
+    public string Description { get; set; }
+    public string Model { get; set; }
+    public string Brand { get; set; }
 }

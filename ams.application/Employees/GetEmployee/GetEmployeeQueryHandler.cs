@@ -3,6 +3,7 @@ using ams.application.Abstractions.Messaging;
 using ams.application.Assets.GetAssets;
 using ams.application.Employees.GetEmployeeAccessories;
 using ams.application.Employees.GetEmployees;
+using ams.application.Licenses.GetLicenses;
 using ams.application.Models;
 using ams.domain.Abstractions;
 using Dapper;
@@ -63,7 +64,14 @@ public sealed class GetEmployeeQueryHandler
             FROM ASSETS A
             LEFT JOIN EMPLOYEES E ON A.ASSIGNED_TO = E.ID
             LEFT JOIN ITEMS I ON A.ITEM_ID = I.ID
-            WHERE A.ASSIGNED_TO = @EmployeeId
+            WHERE A.ASSIGNED_TO = @EmployeeId;
+
+            SELECT L.ID AS Id,
+            L.NAME AS Name
+            FROM LICENSED_EMPLOYEES LE
+            INNER JOIN LICENSES L ON L.ID = LE.LICENSE_ID
+            WHERE LE.IS_DELETED = FALSE
+            AND LE.Employee_Id = @employeeid
             """;
 
         using (var multi = await connection.QueryMultipleAsync(query,
@@ -79,6 +87,7 @@ public sealed class GetEmployeeQueryHandler
             }
             response.AssignedAccessories = multi.Read<EmployeeAccessoryResponse>().ToList();
             response.AssignedAssets = multi.Read<AssetsResponse>().ToList();
+            response.AssignedLicenses = multi.Read<LicenseResponse>().ToList();
             return response;
         }
     }

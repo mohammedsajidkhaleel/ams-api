@@ -1,6 +1,7 @@
 ﻿using ams.application.Assets.GetAssets;
 using ams.application.Employees.GetEmployeeAccessories;
 using ams.application.LicensedEmployees.GetLicencedEmployees;
+using ams.application.Licenses.GetLicenses;
 
 namespace ams.application.Employees.GetEmployee;
 public sealed class EmployeeDetailResponse
@@ -20,7 +21,7 @@ public sealed class EmployeeDetailResponse
     public string Project { get; set; }
     public string IdNumber { get; set; }
     public string Location { get; set; }
-    public List<LicensedEmployeeResponse> AssignedLicenses { get; set; } = new();
+    public List<LicenseResponse> AssignedLicenses { get; set; } = new();
     public List<EmployeeAccessoryResponse> AssignedAccessories { get; set; } = new();
     public List<AssetsResponse> AssignedAssets { get; set; } = new();
 }

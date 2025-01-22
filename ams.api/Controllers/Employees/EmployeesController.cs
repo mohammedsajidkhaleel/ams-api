@@ -101,11 +101,43 @@ public class EmployeesController : ControllerBase
         var employee = await _sender.Send(query, cancellationToken);
         Report report = new Report();
         report.Load("Reports/EmployeeDetails.frx");
+        report.SetParameterValue("Code", employee.Value.Code);
         report.SetParameterValue("Name", employee.Value.Name);
+        report.SetParameterValue("Position", employee.Value.EmployeePosition);
+        report.SetParameterValue("Department", employee.Value.Department);
+        report.SetParameterValue("SubDepartment", employee.Value.SubDepartment);
+        report.SetParameterValue("DOJ", employee.Value.Doj);
+        report.SetParameterValue("Project", employee.Value.Project);
+        report.SetParameterValue("Sponsor", employee.Value.Sponsor);
+        report.SetParameterValue("Location", employee.Value.Location);
+        report.SetParameterValue("Iqama", employee.Value.IdNumber);
+        report.SetParameterValue("Nationality", employee.Value.Nationality);
+        report.SetParameterValue("Email", employee.Value.Email);
+        report.SetParameterValue("Mobile", employee.Value.Mobile);
+        //report.Dictionary.RegisterBusinessObject(
+        //  employee.Value.AssignedAssets, // a (empty) list of objects
+        //  "Assets",          // name of dataset
+        //  2,                   // depth of navigation into properties
+        //  true                 // enable data source
+        //                      );
+        //report.Dictionary.RegisterBusinessObject(
+        // employee.Value.AssignedAccessories, // a (empty) list of objects
+        // "Accessories",          // name of dataset
+        // 2,                   // depth of navigation into properties
+        // true                 // enable data source
+        //                     );
+        //report.Dictionary.RegisterBusinessObject(
+        // employee.Value.AssignedLicenses, // a (empty) list of objects
+        // "Licenses",          // name of dataset
+        // 2,                   // depth of navigation into properties
+        // true                 // enable data source
+        //                     );
+        //report.Save(@"Reports/EmployeeDetails.frx");
+
         report.RegisterData(employee.Value.AssignedAccessories, "Accessories");
         report.RegisterData(employee.Value.AssignedAssets, "Assets");
         report.RegisterData(employee.Value.AssignedLicenses, "Licenses");
-        
+
         if (report.Prepare())
         {
             var pdfExport = new PDFSimpleExport();

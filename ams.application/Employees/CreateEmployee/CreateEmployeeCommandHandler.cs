@@ -27,7 +27,7 @@ public sealed class CreateEmployeeCommandHandler
             request.EmployeePositionId,
             new Mobile(request.Mobile),
             new Email(request.Email),
-            DateOnly.Parse(request.DateOfJoining),
+              string.IsNullOrWhiteSpace(request.DateOfJoining) ? DateOnly.MinValue : DateOnly.Parse(request.DateOfJoining),
             request.ProjectId,
             EmployeeStatus.Active
             );

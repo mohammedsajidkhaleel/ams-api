@@ -25,15 +25,27 @@ namespace ams.application.Employees.GetDepartments
         {
             using var connection = _sqlConnectionFactory.CreateConnection();
             var query = """
-            SELECT d.id
-            ,d.name
-            ,d.parent_department_id as ParentDepartmentId
-            ,dd.name as parentdepartmentname
-            FROM departments d
-            left join departments dd
-                on dd.parent_department_id = d.id
-            where ((@parentdepartmentid is null and d.parent_department_id is null) or d.parent_department_id = @parentdepartmentid)
-            and d.is_deleted = false
+            WITH RECURSIVE department_hierarchy AS (
+                SELECT 
+                    d.id, 
+                    d.name, 
+                    d.parent_department_id, 
+                    cast('' as text) AS parent_name
+                FROM departments d
+                  WHERE d.parent_department_id IS NULL
+                UNION ALL
+                SELECT 
+                    d.id, 
+                    d.name, 
+                    d.parent_department_id, 
+                    dh.name AS parent_name
+                FROM departments d
+                JOIN department_hierarchy dh 
+                    ON d.parent_department_id = dh.id
+            )
+            SELECT id, name,parent_department_id as ParentDepartmentId, parent_name as parentdepartmentname
+            FROM department_hierarchy  
+            WHERE  ((@parentdepartmentid is null and parent_department_id is null) or parent_department_id = @parentdepartmentid);
             """;
             var departments = await connection
                 .QueryAsync<DepartmentResponse>(

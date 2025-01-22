@@ -48,7 +48,8 @@ internal sealed class GetEmployeesQueryHandler
             	EC.NAME AS EMPLOYEECATEGORYNAME,
             	N.NAME AS NATIONALITYNAME,
             	EP.NAME AS EMPLOYEEPOSITIONNAME,
-            	P.NAME AS PROJECTNAME
+            	P.NAME AS PROJECTNAME,
+                E.Project_Id as ProjectId
             FROM EMPLOYEES E
             LEFT JOIN SPONSORS S ON S.ID = E.SPONSOR_ID
             LEFT JOIN DEPARTMENTS D ON D.ID = E.DEPARTMENT_ID

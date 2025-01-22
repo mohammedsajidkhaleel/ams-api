@@ -19,5 +19,6 @@ public sealed class EmployeeResponse
     public string NationalityName { get; set; }
     public string EmployeePositionName { get; set; }
     public string ProjectName { get; set; }
+    public Guid? ProjectId { get; set; }
     public DateTimeOffset CreationDateTime { get; set; }
 }

@@ -21,6 +21,11 @@ public sealed class EditEmployeeCommandHandler
             return null;
         if (employee != null)
         {
+            DateOnly joiningDate = DateOnly.FromDateTime(DateTime.Today);
+            if (DateOnly.TryParse(request.DateOfJoining, out var tempjoiningDate))
+            {
+                joiningDate = tempjoiningDate;
+            }
             Employee.EditEmployee(employee,
                 new EmployeeCode(request.EmployeeCode),
                 new EmployeeName(request.EmployeeName),
@@ -31,7 +36,7 @@ public sealed class EditEmployeeCommandHandler
             request.EmployeePositionId,
             new Mobile(request.Mobile),
             new Email(request.Email),
-            DateOnly.Parse(request.DateOfJoining),
+           joiningDate,
             request.ProjectId,
             EmployeeStatus.Active
                );
