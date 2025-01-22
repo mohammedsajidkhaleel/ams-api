@@ -1,5 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+
 <Report ScriptLanguage="CSharp" ReportInfo.Created="08/17/2024 08:09:40" ReportInfo.Modified="08/17/2024 08:32:08" ReportInfo.CreatorVersion="2024.2.0.0">
+<Dictionary>
+<BusinessObjectDataSource Name="Invoices" ReferenceName="Invoices" Enabled="true">
+  <Column Name="Reference" DataType="System.String"/>
+  <Column Name="Date" DataType="System.String"/>
+  <Column Name="CompanyName" DataType="System.String"/>
+</BusinessObjectDataSource>
+</Dictionary>
   <Dictionary>
     <Parameter Name="ReportTitle" DataType="System.String" AsString=""/>
   </Dictionary>

@@ -1,43 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Report ScriptLanguage="CSharp" ReportInfo.Created="01/21/2025 17:19:02" ReportInfo.Modified="01/21/2025 17:27:19" ReportInfo.CreatorVersion="2025.1.0.0">
+<Report ScriptLanguage="CSharp" ReportInfo.Created="01/21/2025 17:19:02" ReportInfo.Modified="01/21/2025 20:00:58" ReportInfo.CreatorVersion="2025.1.0.0">
   <Dictionary>
-    <XmlDataConnection Name="Connection" ConnectionString="rijcmlqOF2CM2eIk89wVMHQuYHUgmV6tmBfUkqWXurmK/TfnyLmts2Bju4z0FEr8RsK58vnU3afcUwJ1AXIVgbB524nyreCuUEsy4ySR2bQ1EtH0ks=">
-      <TableDataSource Name="assignedAccessories" Alias="Accessories" DataType="System.Int32" Enabled="true" TableName="assignedAccessories">
-        <Column Name="id" DataType="System.String"/>
-        <Column Name="accessoryId" DataType="System.String"/>
-        <Column Name="accessoryName" DataType="System.String"/>
-        <Column Name="creationDateTime" DataType="System.String"/>
-        <Column Name="employee_Id" DataType="System.Int32"/>
-      </TableDataSource>
-      <TableDataSource Name="assignedAssets" Alias="Assets" DataType="System.Int32" Enabled="true" TableName="assignedAssets">
-        <Column Name="id" DataType="System.String"/>
-        <Column Name="code" DataType="System.String"/>
-        <Column Name="name" DataType="System.String"/>
-        <Column Name="serialNumber" DataType="System.String"/>
-        <Column Name="assignedTo" DataType="System.String"/>
-        <Column Name="projectId" DataType="System.String"/>
-        <Column Name="employeeName" DataType="System.String"/>
-        <Column Name="projectName" DataType="System.String"/>
-        <Column Name="creationDateTime" DataType="System.String"/>
-        <Column Name="itemId" DataType="System.String"/>
-        <Column Name="itemName" DataType="System.String"/>
-        <Column Name="poNumber" DataType="System.String"/>
-        <Column Name="status" DataType="System.String"/>
-        <Column Name="statusName" DataType="System.String"/>
-        <Column Name="employee_Id" DataType="System.Int32"/>
-      </TableDataSource>
-    </XmlDataConnection>
-    <Relation Name="employee_assignedAccessories" ParentDataSource="employee" ChildDataSource="assignedAccessories" ParentColumns="employee_Id" ChildColumns="employee_Id" Enabled="true"/>
-    <Relation Name="employee_assignedAssets" ParentDataSource="employee" ChildDataSource="assignedAssets" ParentColumns="employee_Id" ChildColumns="employee_Id" Enabled="true"/>
+    <Relation Name="employee_assignedAccessories" ParentDataSource="null" ChildDataSource="assignedAccessories" ParentColumns="employee_Id" ChildColumns="employee_Id" Enabled="true"/>
+    <Relation Name="employee_assignedAssets" ParentDataSource="null" ChildDataSource="assignedAssets" ParentColumns="employee_Id" ChildColumns="employee_Id" Enabled="true"/>
   </Dictionary>
   <ReportPage Name="Page1" Watermark.Font="Arial, 60pt">
     <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="37.8"/>
     <PageHeaderBand Name="PageHeader1" Top="41.8" Width="718.2" Height="28.35">
-      <TextObject Name="Text2" Left="66.15" Width="94.5" Height="18.9" Text="accessoryName" Font="Arial, 10pt"/>
+      <TextObject Name="Text1" Left="189" Width="255.15" Height="28.35" Text="Employee Details" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
     </PageHeaderBand>
-    <DataBand Name="Data1" Top="74.15" Width="718.2" Height="75.6" DataSource="assignedAccessories">
-      <TextObject Name="Text1" Left="66.15" Top="37.8" Width="94.5" Height="18.9" Text="[Accessories.accessoryName]" Font="Arial, 10pt"/>
-    </DataBand>
+    <DataBand Name="Data1" Top="74.15" Width="718.2" Height="75.6"/>
     <PageFooterBand Name="PageFooter1" Top="153.75" Width="718.2" Height="18.9"/>
   </ReportPage>
 </Report>

@@ -44,7 +44,7 @@ namespace ams.api.Controllers.Reports
         public async Task<IActionResult> GetContactList()
         {
             Report report = new Report();
-            report.Load("Reports/ContactList.frx");
+            report.Load("Reports/test1.frx");
             var query = new GetContactListQuery();
             var employees = await _sender.Send(query);
             report.RegisterData(employees.Value, "Employees");
@@ -60,6 +60,13 @@ namespace ams.api.Controllers.Reports
                 return File(ms, "application/pdf", "employee.pdf");
 
             }
+            //     report.Dictionary.RegisterBusinessObject(
+            //       employees.Value, // a (empty) list of objects
+            //       "Employees",          // name of dataset
+            //       2,                   // depth of navigation into properties
+            //       true                 // enable data source
+            //);
+            //     report.Save(@"test1.frx");
             return Ok();
         }
     }
