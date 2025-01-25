@@ -30,7 +30,7 @@ internal sealed class GetSimsQueryHandler
             s.imei1 as Imei1,
             s.assigned_to as AssignedTo,
             e.name as assignedemployeename,
-            e.code as assignedempployeecode,
+            e.code as assignedemployeecode,
             case when s.status = 1 then 'Assigned'
                  when s.status = 2 then 'Damaged'
             	 else 'Not Assigned' end as simstatus

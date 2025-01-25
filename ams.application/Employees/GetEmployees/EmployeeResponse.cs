@@ -15,6 +15,7 @@ public sealed class EmployeeResponse
     public string Doj { get; set; }
     public string SponsorName { get; set; }
     public string DepartmentName { get; set; }
+    public string ParentDepartmentName { get; set; }
     public string EmployeeCategoryName { get; set; }
     public string NationalityName { get; set; }
     public string EmployeePositionName { get; set; }

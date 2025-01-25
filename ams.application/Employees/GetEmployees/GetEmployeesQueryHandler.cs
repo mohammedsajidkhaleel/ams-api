@@ -4,6 +4,7 @@ using ams.application.Assets.GetAssets;
 using ams.application.Models;
 using ams.domain.Abstractions;
 using Dapper;
+using System.Windows.Markup;
 
 namespace ams.application.Employees.GetEmployees;
 internal sealed class GetEmployeesQueryHandler
@@ -18,16 +19,10 @@ internal sealed class GetEmployeesQueryHandler
     {
         using var connection = _sqlConnectionFactory.CreateConnection();
         string searchQuery = null;
-        if (string.IsNullOrWhiteSpace(request.searchQuery))
-            searchQuery = '%' + request.searchQuery + '%';
+        //if (!string.IsNullOrWhiteSpace(request.searchQuery))
+        //    searchQuery = '%' + request.searchQuery + '%';
 
-        var query = """
-            SELECT COUNT(*) AS COUNT
-            FROM EMPLOYEES
-            WHERE STATUS = 1 
-            AND (@projectid is null or Project_Id = @projectid)
-            AND (@searchquery is null or Name like @searchquery);
-
+        var employeeListQuery = """
             SELECT E.ID,
             	E.CODE,
             	E.NAME,
@@ -60,18 +55,31 @@ internal sealed class GetEmployeesQueryHandler
             LEFT JOIN PROJECTS P ON P.ID = E.PROJECT_ID
             WHERE E.STATUS = 1 
             AND (@projectid is null or E.Project_Id = @projectid)
-            AND (@searchquery is null or E.Name like @searchquery)
+            AND (@searchquery is null or lower(E.Name) like @searchquery or lower(E.Code) like @searchquery)
             order by E.NAME
             OFFSET @offset ROWS
-            FETCH NEXT @limit ROWS ONLY;
+
             """;
+
+        var query = """
+            SELECT COUNT(*) AS COUNT
+            FROM EMPLOYEES
+            WHERE STATUS = 1 
+            AND (@projectid is null or Project_Id = @projectid)
+            AND (@searchquery is null or lower(Name) like @searchquery or lower(Code) like @searchquery);
+            """;
+
+        if (request.pageSize == -1)
+            query = query + employeeListQuery + "LIMIT ALL";
+        else
+            query = query + employeeListQuery + "FETCH NEXT @limit ROWS ONLY;";
 
         var response = new PaginatedResponse<EmployeeResponse>();
         using (var multi = await connection.QueryMultipleAsync(query,
            new
            {
                projectid = request.projectId,
-               searchquery = searchQuery,
+               searchquery = '%'+request.searchQuery.ToLower()+'%',
                offset = request.pageIndex * request.pageSize,
                limit = request.pageSize
            }))

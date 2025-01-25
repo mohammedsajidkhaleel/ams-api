@@ -8,6 +8,7 @@ public sealed record CreateSimCommand(
     string simCardNumber,
     string imei1,
     Guid? createdBy,
-    Guid? assignedTo
+    Guid? assignedTo,
+    Guid? assignedPlan
     )
     : ICommand<Guid>;

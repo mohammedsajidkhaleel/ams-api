@@ -10,6 +10,6 @@ public sealed class SimsResponse
     public string? Imei1 { get; set; }
     public Guid? AssignedTo { get; set; }
     public string? AssignedEmployeeName { get; set; }
-    public string? AssignedEmployeecode { get; set; }
+    public string? AssignedEmployeeCode { get; set; }
     public string? SimStatus { get; set; }
 }

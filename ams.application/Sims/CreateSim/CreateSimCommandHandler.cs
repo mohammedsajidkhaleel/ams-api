@@ -25,7 +25,8 @@ public sealed class CreateSimCommandHandler
             new SimCardNumber(request.simCardNumber),
             new Imei1(request.imei1),
             request.createdBy,
-            request.assignedTo
+            request.assignedTo,
+            request.assignedPlan
             );
         _simRepository.Add(sim);
         await _unitOfWork.SaveChangesAsync();

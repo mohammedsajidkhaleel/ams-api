@@ -14,6 +14,7 @@ public sealed class Sim : Entity
     public Guid? UpdatedBy { get; set; }
     public DateTimeOffset? LastUpdateDateTime { get; set; }
     public Guid? AssignedTo { get; set; }
+    public Guid? AssignedPlan { get; set; }
     public SimStatus Status { get; set; }
     private Sim() { }
 
@@ -23,7 +24,8 @@ public sealed class Sim : Entity
         SimCardNumber simCardNumber,
         Imei1 imei1,
         Guid? createdBy,
-        Guid? assignedTo
+        Guid? assignedTo,
+        Guid? assignedPlan
         )
     {
         Id = id;
@@ -38,6 +40,7 @@ public sealed class Sim : Entity
             Status = SimStatus.Assigned;
         else
             Status = SimStatus.NotAssigned;
+        AssignedPlan = assignedPlan;
     }
 
     public static Sim CreateSim(
@@ -46,7 +49,8 @@ public sealed class Sim : Entity
         SimCardNumber simCardNumber,
         Imei1 imei1,
         Guid? createdBy,
-        Guid? assignedTo)
+        Guid? assignedTo,
+        Guid? assignedPlan)
     {
         var sim = new Sim(Guid.NewGuid(),
             serviceAccount,
@@ -54,7 +58,8 @@ public sealed class Sim : Entity
             simCardNumber,
             imei1,
             createdBy,
-            assignedTo);
+            assignedTo,
+            assignedPlan);
         sim.RaiseDomainEvent(new SimCreatedDomainEvent(sim.Id));
         return sim;
     }
@@ -65,7 +70,8 @@ public sealed class Sim : Entity
         SimCardNumber simCardNumber,
         Imei1 imei1,
         Guid? updatedBy,
-        Guid? assignedTo)
+        Guid? assignedTo,
+        Guid? assignedPlan)
     {
         sim.ServiceAccount = serviceAccount;
         sim.ServiceNumber = serviceNumber;
@@ -74,6 +80,7 @@ public sealed class Sim : Entity
         sim.UpdatedBy = updatedBy;
         sim.LastUpdateDateTime = DateTimeOffset.UtcNow;
         sim.AssignedTo = assignedTo;
+        sim.AssignedPlan = assignedPlan;
         sim.RaiseDomainEvent(new SimUpdatedDomainEvent(sim.Id));
         return sim;
     }

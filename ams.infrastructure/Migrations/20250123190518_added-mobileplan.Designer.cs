@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ams.infrastructure;
@@ -11,9 +12,11 @@ using ams.infrastructure;
 namespace ams.infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250123190518_added-mobileplan")]
+    partial class addedmobileplan
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -885,10 +888,6 @@ namespace ams.infrastructure.Migrations
                         .HasColumnType("character varying(250)")
                         .HasColumnName("name");
 
-                    b.Property<int>("OrderIndex")
-                        .HasColumnType("integer")
-                        .HasColumnName("order_index");
-
                     b.HasKey("Id")
                         .HasName("pk_mobile_plans");
 
@@ -903,43 +902,37 @@ namespace ams.infrastructure.Migrations
                         {
                             Id = new Guid("3aa1a0a0-4178-47b1-8200-ab1a238c0274"),
                             IsDeleted = false,
-                            Name = "50",
-                            OrderIndex = 1
+                            Name = "50"
                         },
                         new
                         {
                             Id = new Guid("166fbe6a-ad4a-4d13-99dc-f86155aa14c7"),
                             IsDeleted = false,
-                            Name = "80",
-                            OrderIndex = 2
+                            Name = "80"
                         },
                         new
                         {
                             Id = new Guid("73450b9a-575d-4eb4-b2c4-3400d3f623b1"),
                             IsDeleted = false,
-                            Name = "120",
-                            OrderIndex = 3
+                            Name = "120"
                         },
                         new
                         {
                             Id = new Guid("d298bb26-6c1f-46cb-a675-aa29d08e23bf"),
                             IsDeleted = false,
-                            Name = "230",
-                            OrderIndex = 4
+                            Name = "230"
                         },
                         new
                         {
                             Id = new Guid("cae99f89-1296-4b32-827e-6b836f2187fa"),
                             IsDeleted = false,
-                            Name = "450",
-                            OrderIndex = 5
+                            Name = "450"
                         },
                         new
                         {
                             Id = new Guid("5677a4d2-d209-403e-b1f0-71a838c5ced3"),
                             IsDeleted = false,
-                            Name = "800",
-                            OrderIndex = 6
+                            Name = "800"
                         });
                 });
 
