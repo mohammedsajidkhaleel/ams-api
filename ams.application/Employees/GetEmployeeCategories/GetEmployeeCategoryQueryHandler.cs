@@ -25,7 +25,7 @@ namespace ams.application.Employees.GetEmployeeCategories
         {
             using var connection = _sqlConnectionFactory.CreateConnection();
             var query = """
-            select id,code,name from employee_catogories
+            select id,code,name from employee_categories
             """;
             var employeeCategories = await connection
                 .QueryAsync<EmployeeCategoryResponse>(

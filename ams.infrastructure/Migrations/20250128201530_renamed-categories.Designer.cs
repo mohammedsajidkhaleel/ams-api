@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ams.infrastructure;
@@ -11,9 +12,11 @@ using ams.infrastructure;
 namespace ams.infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250128201530_renamed-categories")]
+    partial class renamedcategories
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -337,6 +340,7 @@ namespace ams.infrastructure.Migrations
                         .HasColumnName("department_id");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("email");
 
@@ -355,6 +359,7 @@ namespace ams.infrastructure.Migrations
                         .HasColumnName("is_deleted");
 
                     b.Property<string>("Mobile")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("mobile");
 
@@ -965,6 +970,7 @@ namespace ams.infrastructure.Migrations
                         .HasColumnName("creation_date_time");
 
                     b.Property<string>("Imei1")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)")
                         .HasColumnName("imei1");

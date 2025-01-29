@@ -8,7 +8,7 @@ internal sealed class EmployeeCategoryConfiguration
 {
     public void Configure(EntityTypeBuilder<EmployeeCategory> builder)
     {
-        builder.ToTable("employee_catogories");
+        builder.ToTable("employee_categories");
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Name)
             .IsRequired()

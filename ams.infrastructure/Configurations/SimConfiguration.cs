@@ -28,7 +28,6 @@ internal sealed class SimConfiguration
            .HasMaxLength(100)
            .HasConversion(simcardnumber => simcardnumber.Value, value => new SimCardNumber(value));
         builder.Property(x => x.Imei1)
-          .IsRequired()
           .HasMaxLength(100)
           .HasConversion(imei => imei.Value, value => new Imei1(value));
         builder.HasOne<Employee>()

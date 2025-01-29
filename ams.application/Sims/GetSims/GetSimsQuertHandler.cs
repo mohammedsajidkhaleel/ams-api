@@ -21,7 +21,8 @@ internal sealed class GetSimsQueryHandler
         var query = """
             SELECT COUNT(*) AS COUNT
             FROM SIMS
-            WHERE IS_DELETED = FALSE;
+            WHERE IS_DELETED = FALSE
+            AND (@searchquery is null or lower(service_account) like @searchquery or lower(service_number) like @searchquery or lower(sim_card_number) like @searchquery);
 
             select s.id,
             s.service_account as ServiceAccount,
@@ -37,6 +38,7 @@ internal sealed class GetSimsQueryHandler
             from sims s
             left join employees e on s.assigned_to = e.id
             WHERE s.is_deleted = false
+            AND (@searchquery is null or lower(s.service_account) like @searchquery or lower(s.service_number) like @searchquery or lower(s.sim_card_number) like @searchquery)
             OFFSET @offset
             LIMIT @limit
             """;
@@ -44,7 +46,7 @@ internal sealed class GetSimsQueryHandler
         using (var multi = await connection.QueryMultipleAsync(query,
             new
             {
-                code = '%' + request.searchQuery + '%',
+                searchquery = '%' + request.searchQuery + '%',
                 offset = request.pageIndex * request.pageSize,
                 limit = request.pageSize
             }))

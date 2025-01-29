@@ -2,7 +2,7 @@
     string ServiceAccount,
     string ServiceNumber,
     string SimCardNumber,
-    string Imei1,
+    string? Imei1,
     Guid? AssignedTo,
     Guid? AssignedPlan
     );

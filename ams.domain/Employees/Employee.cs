@@ -10,8 +10,8 @@ public sealed class Employee : Entity
     public Guid? EmployeeCategoryId { get; private set; }
     public Guid? NationalityId { get; private set; }
     public Guid? EmployeePositionId { get; private set; }
-    public Mobile Mobile { get; private set; }
-    public Email Email { get; set; }
+    public Mobile? Mobile { get; private set; }
+    public Email? Email { get; set; }
     public DateOnly? DOJ { get; set; }
     public Guid? ProjectId { get; set; }
     public DateTimeOffset CreationDateTime { get; private set; }
