@@ -2,6 +2,7 @@
 using ams.application.Assets.DeleteAsset;
 using ams.application.Assets.EditAsset;
 using ams.application.Assets.GetAssets;
+using ams.application.Assets.GetAssetsByItem;
 using ams.domain.Abstractions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -56,8 +57,8 @@ public class AssetsController : ControllerBase
          model?.PONumber ?? "");
         Result<Guid> result = await _sender.Send(command, cancellationToken);
         return Ok(new { id = result.Value });
-    }    
-    
+    }
+
     [HttpDelete("{id:Guid}")]
     public async Task<IActionResult> DeleteAsset([FromRoute] Guid id,
         CancellationToken cancellationToken)
@@ -79,5 +80,15 @@ public class AssetsController : ControllerBase
         return Ok(assets);
     }
 
-
+    [HttpGet, Route("byitem")]
+    public async Task<IActionResult> GetAllAssetsByItem(
+        int pageIndex = 0,
+        int pageSize = 10,
+        string poNumber = "",
+        CancellationToken cancellationToken = default)
+    {
+        var query = new GetAssetsByItemQuery(pageIndex, pageSize, poNumber);
+        var assets = await _sender.Send(query, cancellationToken);
+        return Ok(assets);
+    }
 }
