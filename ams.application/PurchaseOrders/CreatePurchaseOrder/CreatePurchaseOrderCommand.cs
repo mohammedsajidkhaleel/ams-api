@@ -7,6 +7,7 @@ public sealed record CreatePurchaseOrderCommand(
     DateOnly PurchaseDate,
     Guid CreatedBy,
     string CreatedUserName,
+    string Description,
     List<CreatePurchaseOrderItemCommand> Items
     ) : ICommand<Guid>;
 

@@ -1,5 +1,4 @@
-﻿using ams.infrastructure.Data;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 
 namespace ams.api.Extensions;
 

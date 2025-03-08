@@ -1,7 +1,4 @@
-﻿using ams.api.Controllers.Assets;
-using ams.application.Assets.DeleteAsset;
-using ams.application.Assets.EditAsset;
-using ams.application.Employees.CreateEmployee;
+﻿using ams.application.Employees.CreateEmployee;
 using ams.application.Employees.DeleteEmployee;
 using ams.application.Employees.EditEmployee;
 using ams.application.Employees.GetEmployee;
@@ -11,7 +8,6 @@ using FastReport;
 using FastReport.Export.PdfSimple;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ams.api.Controllers.Employees;

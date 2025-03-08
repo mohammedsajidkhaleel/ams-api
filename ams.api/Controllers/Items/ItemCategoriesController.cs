@@ -1,8 +1,6 @@
 ﻿using ams.application.Items.GetItemCategories;
-using ams.domain.Items;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ams.api.Controllers.Items;

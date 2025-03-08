@@ -1,11 +1,10 @@
-﻿
-using ams.application.Abstractions.Data;
+﻿using ams.application.Abstractions.Data;
 using ams.application.Abstractions.Messaging;
 using ams.application.Models;
 using ams.domain.Abstractions;
 using Dapper;
 
-namespace ams.application.Assets.GetPoNumbers;
+namespace ams.application.PurchaseOrders.GetPoNumbers;
 internal sealed class GetPoNumbersQueryHandler
     : IQueryHandler<GetPoNumbersQuery, PaginatedResponse<PoNumbersReponse>>
 {

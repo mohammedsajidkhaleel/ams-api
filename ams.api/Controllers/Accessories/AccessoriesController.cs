@@ -1,5 +1,4 @@
 ﻿using ams.application.Employees.GetAccessories;
-using ams.application.Items.GetItem;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

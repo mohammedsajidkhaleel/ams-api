@@ -32,6 +32,7 @@ public sealed class CreatePurchaseOrderCommandHandler
             request.PurchaseDate,
             request.CreatedBy,
             request.CreatedUserName,
+            request.Description,
             purchaseOrderItems
             );
         _purchaseOrderRepository.Add(purchaseOrder);

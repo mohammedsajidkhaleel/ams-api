@@ -1,7 +1,6 @@
 ﻿using ams.application.Employees.GetSponsors;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ams.api.Controllers.Employees;

@@ -1,4 +1,4 @@
-﻿namespace ams.application.Assets.GetPoNumbers;
+﻿namespace ams.application.PurchaseOrders.GetPoNumbers;
 
 public sealed class PoNumbersReponse
 {

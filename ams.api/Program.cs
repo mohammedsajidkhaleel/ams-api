@@ -1,8 +1,7 @@
-using ams.infrastructure;
-using ams.application;
 using ams.api.Extensions;
+using ams.application;
+using ams.infrastructure;
 using ams.infrastructure.Data;
-using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 

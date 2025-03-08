@@ -1,9 +1,10 @@
 ﻿using ams.api.Extensions;
-using ams.application.Assets.GetAssets;
-using ams.application.Assets.GetPoNumbers;
 using ams.application.PurchaseOrders.CreatePurchaseOrder;
+using ams.application.PurchaseOrders.DeletePurchaseOrder;
+using ams.application.PurchaseOrders.GetPoNumbers;
+using ams.application.PurchaseOrders.GetPurchaseOrder;
+using ams.application.PurchaseOrders.GetPurchaseOrders;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ams.api.Controllers.PurchaseOrders
@@ -15,6 +16,28 @@ namespace ams.api.Controllers.PurchaseOrders
     {
         [HttpGet]
         public async Task<IActionResult> GetAllPurchaseOrders(
+       int pageIndex = 0,
+       int pageSize = 10,
+       string poNumber = "",
+       CancellationToken cancellationToken = default)
+        {
+            var query = new GetPurchaseOrdersQuery(pageIndex, pageSize, poNumber);
+            var purchaseOrders = await sender.Send(query, cancellationToken);
+            return Ok(purchaseOrders);
+        }
+
+        [HttpGet, Route("{id:guid}")]
+        public async Task<IActionResult> GetPurchaseOrder(
+            Guid id,
+            CancellationToken cancellationToken)
+        {
+            var query = new GetPurchaseOrderQuery(id);
+            var purchaseOrder = await sender.Send(query, cancellationToken);
+            return Ok(purchaseOrder);
+        }
+
+        [HttpGet, Route("numbers")]
+        public async Task<IActionResult> GetAllPurchaseOrderNumbers(
        int pageIndex = 0,
        int pageSize = 10,
        string poNumber = "",
@@ -35,12 +58,23 @@ namespace ams.api.Controllers.PurchaseOrders
                 model.PurchaseDate,
                 HttpContext.User.GetLoggedInUser(),
                 "",
+                model.Description,
                 model.Items.Select(i => new CreatePurchaseOrderItemCommand(i.ItemId, i.Quantity)).ToList());
             var result = await sender.Send(
                 command,
                 cancellationToken);
             return CreatedAtAction(nameof(CreatePurchaseOrder),
                 new { id = result.Value }, result.Value);
+        }
+
+        [HttpDelete, Route("{id:guid}")]
+        public async Task<IActionResult> DeletePurchaseOrder(
+            Guid id,
+            CancellationToken cancellationToken)
+        {
+            var command = new DeletePurchaseOrderCommand(id);
+            var result = await sender.Send(command, cancellationToken);
+            return 
         }
     }
 

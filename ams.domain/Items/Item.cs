@@ -16,5 +16,6 @@ public sealed class Item : Entity
     public Guid ItemCategoryId { get; private set; }
     public string? Description { get; private set; } = string.Empty;
     public DateTimeOffset CreationDateTime { get; private set; }
+    public ItemType ItemType { get; set; }
 }
 

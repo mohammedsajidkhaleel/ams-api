@@ -1,7 +1,5 @@
 ﻿using ams.application.Employees.GetDepartments;
-using ams.domain.Employees;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ams.api.Controllers.Employees

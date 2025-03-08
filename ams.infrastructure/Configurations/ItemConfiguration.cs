@@ -13,6 +13,8 @@ internal sealed class ItemConfiguration : IEntityTypeConfiguration<Item>
             .HasMaxLength(250);
         builder.Property(item => item.Description)
             .HasMaxLength(2000);
+        builder.Property(item => item.ItemType)
+            .HasDefaultValue(ItemType.Asset);
         builder.HasOne<ItemCategory>()
         .WithMany()
         .HasForeignKey(i => i.ItemCategoryId);
